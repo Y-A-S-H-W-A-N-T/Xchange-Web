@@ -1,0 +1,30 @@
+.input{
+    outline: none;
+    padding: 10px;
+    display: flex;
+    margin: 20px;
+    width: 100%;
+    font-family: cursive;
+    font-size: 30px;
+}
+
+.login_box{
+    display: inline;
+}
+
+.login_container{
+    display: flex;
+    justify-content: center;
+    margin-top: 15%;
+}
+
+.submit{
+    margin-left: 42%;
+    font-family: cursive;
+    font-size: 30px;
+    background-color: red;
+    width: 20%;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: white;
+}
