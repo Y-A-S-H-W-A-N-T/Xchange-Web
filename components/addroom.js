@@ -7,11 +7,10 @@ export default function home() {
     const [image,setImage] = useState(null)
     const [chatroom,setChatRoom] = useState({
         name: '',
-        description: ''
+        description: '',
     })
-    const [image_url,setImage_url] = useState('')
-
     const Create = async()=>{
+        if(chatroom.name==='') return alert("Enter name before uploading image")
         if(!image)
         {
             alert("ADD IMAGE")
@@ -21,9 +20,11 @@ export default function home() {
         uploadBytes(Img_ref,image)
         .then((res)=>{
             getDownloadURL(res.ref)
-            .then((link)=>{
-                setImage_url(link)
-                console.log(link)
+            .then(async(link)=>{
+                await axios.post('http://localhost:3000/api/create_room',{name: chatroom.name, description: chatroom.description, image: link})
+                .then((res)=>{
+                    res.data.status===200? alert("Room Created") : alert("Room was not created due to some issue")
+                })
             })
         })
     }
