@@ -1,23 +1,30 @@
 import { useState } from "react"
 import axios from "axios"
+import { storage } from "../config.js"
+import { uploadBytes, ref, getDownloadURL } from "firebase/storage"
 
 export default function home() {
+    const [image,setImage] = useState(null)
     const [chatroom,setChatRoom] = useState({
-        image: null,
         name: '',
         description: ''
     })
+    const [image_url,setImage_url] = useState('')
 
     const Create = async()=>{
-        const formdata = new FormData()
-        formdata.append('image',chatroom.image)
-        formdata.append('name',chatroom.name)
-        formdata.append('description',chatroom.description)
-        await axios.post('http://localhost:8000/create-room',formdata)
+        if(!image)
+        {
+            alert("ADD IMAGE")
+            return false
+        }
+        const Img_ref = ref(storage,chatroom.name)
+        uploadBytes(Img_ref,image)
         .then((res)=>{
-            if(res.data.message==='room_created') alert("Room Created")
-            else alert("Error in Creating Room")
-            
+            getDownloadURL(res.ref)
+            .then((link)=>{
+                setImage_url(link)
+                console.log(link)
+            })
         })
     }
 
@@ -26,7 +33,7 @@ export default function home() {
             <div>
                 <input placeholder="Room name" onChange={(e)=>setChatRoom((prev)=>({...prev,name: e.target.value}))}/>
                 <input placeholder="description" onChange={(e)=>setChatRoom((prev)=>({...prev,description: e.target.value}))}/>
-                <input type="file" onChange={(e)=>setChatRoom((prev)=>({...prev,image: e.target.files[0]}))}/>
+                <input type="file" onChange={(e)=>setImage(e.target.files[0])}/>
                 <button onClick={Create}>CREATE</button>
             </div>
       </div>
