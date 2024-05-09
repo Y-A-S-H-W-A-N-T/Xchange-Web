@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/socket.io": "^3.0.2",
     "axios": "^1.6.8",
     "firebase": "^10.11.1",
     "fs": "^0.0.1-security",
@@ -17,6 +18,8 @@
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
     "util": "^0.12.5"
   }
 }

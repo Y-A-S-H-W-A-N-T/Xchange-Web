@@ -1,9 +1,11 @@
 import { useState } from "react"
 import axios from "axios"
 import { storage } from "../config.js"
+import { useRouter } from 'next/router';
 import { uploadBytes, ref, getDownloadURL } from "firebase/storage"
 
 export default function home() {
+    const router = useRouter();
     const [image,setImage] = useState(null)
     const [chatroom,setChatRoom] = useState({
         name: '',
@@ -21,9 +23,10 @@ export default function home() {
         .then((res)=>{
             getDownloadURL(res.ref)
             .then(async(link)=>{
-                await axios.post('http://localhost:3000/api/create_room',{name: chatroom.name, description: chatroom.description, image: link})
+                await axios.post('http://localhost:3000/api/room',{name: chatroom.name, description: chatroom.description, image: link})
                 .then((res)=>{
                     res.data.status===200? alert("Room Created") : alert("Room was not created due to some issue")
+                    router.reload()
                 })
             })
         })

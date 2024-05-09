@@ -3,6 +3,8 @@ import login from '../styles/login.module.css'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 
+axios.post('http://localhost:3000/api/').then((res)=>console.log(res.data.msg))
+
 export default function Home() {
 
   const router = useRouter();
@@ -11,18 +13,6 @@ export default function Home() {
     "vtu": '',
     "password": ''
   })
-
-  // const Login = async()=>{
-  //   if(student.vtu==='' || student.password==='')
-  //       return alert('Enter Details')
-  //   await axios.post('http://localhost:8000/login',student)
-  //   .then((res)=>{
-  //     if(res.data.message==='login_error') return
-  //     localStorage.setItem('name', JSON.stringify(res.data.name))
-  //     localStorage.setItem('vtu', JSON.stringify(res.data.vtu))
-  //     router.replace('/home')
-  //   })
-  // }
 
   const Login = async()=>{
     if(student.vtu==='' || student.password==='')
