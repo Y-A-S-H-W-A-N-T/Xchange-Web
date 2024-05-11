@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import io from 'socket.io-client';
-import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react'
+import io from 'socket.io-client'
+import { useRouter } from 'next/router'
+import { storage } from "../../config"
+import { uploadBytes, ref, getDownloadURL } from "firebase/storage"
+import Image from 'next/image'
 
 const socket = io('http://localhost:8000/')
 
@@ -11,7 +14,6 @@ export default function Home() {
   const [media,setMedia] = useState('')
   const [vtu,setVtu] = useState(null)
   const [oldMessages,setOldMessages] = useState([{}])
-
   const [message,setMessage] = useState('')
 
     useEffect(() => {
@@ -36,16 +38,31 @@ export default function Home() {
       setMessage('')
     }
 
+    const handleImage = (image)=>{
+      const Img_ref = ref(storage,`/messages/${vtu}/`)
+        uploadBytes(Img_ref,image)
+        .then((res)=>{
+            getDownloadURL(res.ref)
+            .then(async(link)=>{
+                setMedia(link)
+            })
+        })
+    }
+
+    console.log(media)
+
     return (
       <div>
         Socket.io <br/>
-        <input type='file'/><input placeholder='Type here' onChange={(e)=>setMessage(e.target.value)} value={message}/>
+        <input type='file' onChange={(e)=>handleImage(e.target.files[0])}/><label>Send an image</label>
+        {media && <Image src={media} width={50} height={50}/>}
+        <input placeholder='Type here' onChange={(e)=>setMessage(e.target.value)} value={message}/>
         <button onClick={SEND}>SEND</button>
         <div>
           {
             oldMessages.map((val,ind)=>(
               <div key={ind}>
-                  <p>{val.sender_vtu} : </p><p>{val.message}</p>
+                  <p>{val.sender_vtu} : </p><p>{val.message} {val.media && <Image src={val.media} width={50} height={50}/>}</p>
               </div>
             ))
           }
