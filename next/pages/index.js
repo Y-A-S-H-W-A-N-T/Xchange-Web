@@ -1,6 +1,6 @@
 import axios from 'axios'
 import login from '../styles/login.module.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
 axios.post('http://localhost:3000/api/').then((res)=>console.log(res.data.msg))
@@ -13,6 +13,11 @@ export default function Home() {
     "vtu": '',
     "password": ''
   })
+
+  useEffect(()=>{
+    let vtu = localStorage.getItem('vtu')
+    vtu? router.replace('/home'): console.log("SHOW LOADING SCREEN")
+  },[])
 
   const Login = async()=>{
     if(student.vtu==='' || student.password==='')

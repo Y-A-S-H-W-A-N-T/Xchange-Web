@@ -17,9 +17,18 @@ export default function home() {
   },[])
   console.log("ROOMS - > ",rooms)
 
+  const Logout = ()=>{
+    localStorage.removeItem('vtu')
+    localStorage.removeItem('name')
+    router.replace('/')
+  }
+
   return (
     <div>
         <div>
+          <div>
+            <button onClick={Logout}>LOGOUT</button>
+          </div>
             <div>
                 <h1>Chat Room</h1>
             </div>
