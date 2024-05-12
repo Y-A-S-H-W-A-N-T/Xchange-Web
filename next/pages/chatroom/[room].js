@@ -35,11 +35,12 @@ export default function Home() {
       media: media,
       sender_vtu: vtu,
     });
-    setMessage('');
+    setMessage('')
+    setMedia('')
   };
 
   const handleImage = image => {
-    const Img_ref = ref(storage, `/messages/${vtu}/`);
+    const Img_ref = ref(storage, `/messages/${vtu}/${Date.now()}`);
     uploadBytes(Img_ref, image).then(res => {
       getDownloadURL(res.ref).then(async link => {
         setMedia(link);
@@ -59,13 +60,16 @@ export default function Home() {
               return(
                 <div className={styles.message_box} style={{marginLeft: '50%'}}>
                     <div key={ind} className={styles.messageContainer}>
-                      <div className={styles.message}>
-                        <p>
-                          {val.message}
-                        </p>
-                      </div>
-                      {val.media && <Image style={{marginLeft: '50%'}} src={val.media} width={200} height={200} />}
+                      {
+                        val.message!=='' && 
+                        <div className={styles.message}>
+                          <p>
+                            {val.message}
+                          </p>
+                        </div>
+                      }
                     </div>
+                    {val.media && <Image style={{marginLeft: '50%'}} src={val.media} width={200} height={200} />}
                 </div>
               )
             }
@@ -74,13 +78,16 @@ export default function Home() {
                 <div className={styles.message_box}>
                     <div key={ind} className={styles.messageContainer}>
                       {val.sender_vtu}:
-                      <div className={styles.message} style={{width: '50%'}}>
-                        <p>
-                          {val.message}
-                        </p>
-                      </div>
-                      {val.media && <Image src={val.media} width={100} height={100} />}
+                      {
+                        val.message!=='' &&
+                        <div className={styles.message} style={{width: '40%'}}>
+                          <p>
+                            {val.message}
+                          </p>
+                        </div>
+                      }
                     </div>
+                    {val.media && <Image src={val.media} width={100} height={100} />}
                 </div>
               )
             }

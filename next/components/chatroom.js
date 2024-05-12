@@ -1,23 +1,17 @@
 import { useState } from "react";
 import axios from "axios";
-import { storage } from "../config.js";
+import { storage } from "../config";
 import { useRouter } from "next/router";
-import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
-import styles from "../styles/modal.module.css"
-import Chatroom from "../components/chatroom.js";
+import { uploadBytes, ref, getDownloadURL } from "firebase/storage"
 
-export default function Home({ modal, showModal }) {
+export default function chatroom() {
+    
   const router = useRouter();
   const [image, setImage] = useState(null);
   const [chatroom, setChatRoom] = useState({
     name: "",
     description: "",
   })
-
-  const toggleModal = () => {
-    showModal()
-  };
-
   const Create = async () => {
     if (chatroom.name === "") return alert("Enter name before uploading image");
     if (!image) {
@@ -40,24 +34,37 @@ export default function Home({ modal, showModal }) {
             router.reload();
           });
       });
-    });
-    toggleModal()
+    })
   };
-
   return (
     <div>
-      {modal && (
-        <div className={styles.modal}>
-          <div className={styles.modalContent}>
-            <span className={styles.close} onClick={toggleModal}>
-              &times;
-            </span>
-            <h2>Create Room, Upload News, Community</h2>
-            <Chatroom/>
-          </div>
+        <div>
+            <div>
+            <h2>Chat Room</h2>
+            <div>
+                <input
+                placeholder="Room name"
+                onChange={(e) =>
+                    setChatRoom((prev) => ({ ...prev, name: e.target.value }))
+                }
+                />
+                <input
+                placeholder="Description"
+                onChange={(e) =>
+                    setChatRoom((prev) => ({
+                    ...prev,
+                    description: e.target.value,
+                    }))
+                }
+                />
+                <input
+                type="file"
+                onChange={(e) => setImage(e.target.files[0])}
+                />
+                <button onClick={Create}>CREATE</button>
+            </div>
+            </div>
         </div>
-      )}
-      {/* End of Modal */}
-    </div>
-  );
+  </div>
+  )
 }

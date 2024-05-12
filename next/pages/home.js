@@ -3,11 +3,13 @@ import AddRoom from '../components/addroom'
 import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import Nav from '../components/navbar'
 
 export default function home() {
   const router = useRouter();
 
   const [rooms,setRooms] = useState()
+  const [create,setCreate] = useState(false)
 
   useEffect(()=>{
     axios.get('http://localhost:3000/api/room')
@@ -23,19 +25,21 @@ export default function home() {
     router.replace('/')
   }
 
+  const toggleModal = ()=>{ setCreate(!create) }
+
   return (
     <div>
         <div>
+          <div className='navbar'>
+            <Nav/>
+          </div>
           <div>
             <button onClick={Logout}>LOGOUT</button>
           </div>
-            <div>
-                <h1>Chat Room</h1>
+            <div onClick={()=>setCreate(!create)}>
+                <h1>Create ➕</h1>
             </div>
-            <div>
-                <p>Add Room ➕</p>
-            </div>
-            <AddRoom/>
+            {create && <AddRoom modal={create} showModal={toggleModal}/>}
             <div>
               {
                 rooms &&
