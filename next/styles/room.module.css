@@ -1,0 +1,77 @@
+.chatContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 5px;
+    height: 80vh;
+  }
+  
+  .messagesContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Add space between messages */
+  }
+  
+  .message {
+    background-color: #acdd98;
+    padding: 10px;
+    border-radius: 15px;
+    margin: 20px;
+    border-top-left-radius: 0px;
+  }
+  
+  .message p {
+    margin: 0;
+  }
+  
+  .send_field {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    background-color: #fff;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    width: 60%;
+  }
+  
+  .inputContainer {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+  }
+  
+  .inputContainer input[type="file"] {
+    opacity: 0;
+    position: absolute;
+    width: 0;
+    height: 0;
+  }
+  
+  .inputContainer label {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .inputContainer input[type="text"] {
+    flex-grow: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-right: 10px; /* Add some space between text input and button */
+  }
+  
+  .inputContainer button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
