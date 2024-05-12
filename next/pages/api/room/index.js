@@ -1,4 +1,3 @@
-import connect from '../../../mongo'
 import Room from '../../../Schema/RoomSchema.js'
 
 export default async function POST(req,res) {
@@ -18,8 +17,7 @@ export default async function POST(req,res) {
         }
     }
     else if(req.method === 'GET'){
-        const rooms = await Room.find({})
-        res.json(rooms)
+        res.json(await Room.find({}))
     }
   }
 

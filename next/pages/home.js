@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import AddRoom from '../components/addroom'
+import Create from '../components/create'
 import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -10,11 +10,16 @@ export default function home() {
 
   const [rooms,setRooms] = useState()
   const [create,setCreate] = useState(false)
+  const [news,setNews] = useState()
 
   useEffect(()=>{
     axios.get('http://localhost:3000/api/room')
     .then((res)=>{
       setRooms(res.data)
+    })
+    axios.get('http://localhost:3000/api/news/show_news')
+    .then((res)=>{
+      setNews(res.data)
     })
   },[])
   console.log("ROOMS - > ",rooms)
@@ -39,8 +44,9 @@ export default function home() {
             <div onClick={()=>setCreate(!create)}>
                 <h1>Create ➕</h1>
             </div>
-            {create && <AddRoom modal={create} showModal={toggleModal}/>}
+            {create && <Create modal={create} showModal={toggleModal}/>}
             <div>
+              CHAT ROOMS
               {
                 rooms &&
                 rooms.map((room,ind)=>(
@@ -52,7 +58,27 @@ export default function home() {
                         <Image src={room.image} width={50} height={50}/>
                       </div>
                       <div>
-                        <>{room.name}</>
+                        <>{room.description}</>
+                      </div>
+                  </div>
+                ))
+              }
+            </div>
+            <p>-------------------------------------</p>
+            <div>
+              News
+              {
+                news &&
+                news.map((news,ind)=>(
+                  <div key={ind} style={{backgroundColor: 'lightblue'}}>
+                      <div>
+                        <h1>{news.headline}</h1>
+                      </div>
+                      <div>
+                        <Image src={news.image} width={400} height={200}/>
+                      </div>
+                      <div>
+                        <>{news.description}</>
                       </div>
                   </div>
                 ))
