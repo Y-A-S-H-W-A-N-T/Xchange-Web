@@ -1,7 +1,10 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
+import { useRouter } from "next/router"
 
 export default function Communities() {
+
+    const router = useRouter()
 
     const [communities,setCommunities] = useState(null)
     const [VTU,setVTU] = useState('')
@@ -21,9 +24,19 @@ export default function Communities() {
         getCommunities()
     },[])
 
-    const JoinCommunity = async()=>{
+    const JoinCommunity = async(e,id,community_name)=>{
+        e.stopPropagation();
         await axios
-        .post('/api/community/join_member')
+        .post('/api/community/join_member',{
+            community_id: id,
+            user_vtu: VTU 
+        })
+        .then((res)=>{
+            res.data.status===200
+            ? alert(`You have Joined the ${community_name} Community`)
+            : alert("Error in Joining Community, Please Try Again")
+        })
+        router.reload()
     }
 
 
@@ -33,10 +46,25 @@ export default function Communities() {
             {
                 communities &&
                 communities.map((val,ind)=>(
-                    <div key={ind} style={{border: '2px black solid'}}>
+                    <div key={ind} style={{border: '2px black solid'}}
+                        onClick={()=>{
+                            val.members.some(member => member.user_vtu === VTU)
+                            ? router.push( `/communities/${val._id}`)
+                            : alert("First Join the Community")
+                        }}
+                    
+                    >
                         <p>{val.name}</p>
                         <p>{val.description}</p>
-                        <p onClick={()=>JoinCommunity(val._id,VTU)}>JOIN ➕</p>
+                        {val.members.some(member => member.user_vtu === VTU)
+                        ?
+                        (
+                            <p>Member ✔️</p>
+                        )
+                        :
+                        (
+                            <p onClick={(e)=>JoinCommunity(e,val._id,val.name)} style={{backgroundColor: 'lightgreen',cursor: 'pointer'}}>Join Community ➕</p>
+                        )}
                     </div>
                 ))
             }

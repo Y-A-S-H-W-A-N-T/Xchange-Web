@@ -26,7 +26,7 @@ export default function Home() {
       setOldMessages(past);
       console.log(past);
     });
-  }, [message]);
+  }, [room]);
 
   const SEND = () => {
     if(media==='' && message==='') return
