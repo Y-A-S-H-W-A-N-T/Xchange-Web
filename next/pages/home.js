@@ -4,15 +4,21 @@ import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Nav from '../components/navbar'
+import React, { createContext } from 'react';
 
 export default function home() {
   const router = useRouter();
+  const VTU_context = createContext();
 
   const [rooms,setRooms] = useState()
   const [create,setCreate] = useState(false)
   const [news,setNews] = useState()
+  const [VTU,setVTU] = useState()
 
   useEffect(()=>{
+    let vtu = localStorage.getItem('vtu');
+    const new_vtu = vtu.replace(/^"(.*)"$/, '$1');
+    setVTU(new_vtu);
     axios.get('http://localhost:3000/api/room')
     .then((res)=>{
       setRooms(res.data)
@@ -33,7 +39,7 @@ export default function home() {
   const toggleModal = ()=>{ setCreate(!create) }
 
   return (
-    <div>
+    <VTU_context.Provider value={VTU}>
         <div>
           <div className='navbar'>
             <Nav/>
@@ -85,6 +91,6 @@ export default function home() {
               }
             </div>
         </div>
-    </div>
+    </VTU_context.Provider>
   )
 }

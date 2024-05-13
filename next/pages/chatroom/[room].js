@@ -9,6 +9,7 @@ import styles from '../../styles/room.module.css';
 const socket = io('http://localhost:8000/');
 
 export default function Home() {
+  
   const router = useRouter();
   const { room } = router.query;
   const [media, setMedia] = useState('');

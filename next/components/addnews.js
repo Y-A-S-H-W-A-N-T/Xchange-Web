@@ -49,7 +49,7 @@ const Img_ref = ref(storage, `/news/${news.name,'-',Date.now()}`);
                 }
                 />
                 <input
-                placeholder="Description"
+                placeholder="News"
                 onChange={(e) =>
                     setnews((prev) => ({
                     ...prev,
