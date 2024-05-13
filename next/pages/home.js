@@ -61,7 +61,7 @@ export default function home() {
                         <h1>{room.name}</h1>
                       </div>
                       <div>
-                        <Image src={room.image} width={50} height={50}/>
+                        <Image src={room.image} width={50} height={50} alt='room_image'/>
                       </div>
                       <div>
                         <>{room.description}</>
@@ -81,7 +81,7 @@ export default function home() {
                         <h1>{news.headline}</h1>
                       </div>
                       <div>
-                        <Image src={news.image} width={400} height={200}/>
+                        <Image src={news.image} width={400} height={200} alt='news image'/>
                       </div>
                       <div>
                         <>{news.description}</>

@@ -1,4 +1,4 @@
-import Community from '../../../Schema/communitySchema.js'
+import Community from '../../../Schema/CommunitySchema.js'
 
 export default async function POST(req,res) {
     try{

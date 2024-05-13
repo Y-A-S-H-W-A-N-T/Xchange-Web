@@ -8,7 +8,7 @@ export default function AddCommunity() {
     let vtu = localStorage.getItem('vtu');
     const VTU = vtu.replace(/^"(.*)"$/, '$1');
     setCommunity((prev)=>({...prev,leader: VTU}))
-  })
+  },[])
 
   const router = useRouter()
   const [community, setCommunity] = useState({

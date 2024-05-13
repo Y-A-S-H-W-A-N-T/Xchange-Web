@@ -16,8 +16,8 @@ const server = http.createServer(app);
 
 
 app.use(cors({
-    origin: 'http://localhost:3000', // Replace with your frontend URL
-    methods: ['GET', 'POST'] // Add other methods as needed
+    origin: '*',
+    methods: ['GET', 'POST']
   }));
 
   const io = socketIo(server, {
@@ -40,7 +40,10 @@ io.on('connection', (socket) => {
           media: data.media,
           message: data.message
         }
-        const result = await Room.updateOne({_id: data.room_id },{ $push: { chats: message } })
+        const result = await Room.updateOne(
+          {_id: data.room_id },
+          { $push: { chats: message } }
+        )
         console.log(result)
         socket.emit('chat',data)
     })
