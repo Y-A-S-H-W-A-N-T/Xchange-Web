@@ -3,7 +3,7 @@ import Addnews from "./addnews";
 import Chatroom from "./chatroom.js";
 import Community from "./addcommunity.js";
 
-export default function Home({ modal, showModal }) {
+export default function Create({ modal, showModal }) {
 
   const toggleModal = () => {
     showModal()

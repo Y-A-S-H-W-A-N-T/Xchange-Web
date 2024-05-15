@@ -1,8 +1,14 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import AddPost from '@/components/addPost';
 
 export default function Community() {
+
+    const [addpost,setaddpost] = useState(false)
+    const togglePostScreen = ()=>{
+        setaddpost(!addpost)
+    }
 
     const router = useRouter()
     const { community } = router.query
@@ -37,7 +43,8 @@ export default function Community() {
         <div onClick={Leave_Community} style={{display: 'flex', backgroundColor: 'red', cursor: 'pointer'}}>Leave</div>
         <div>
             <div>
-                <p onClick={()=>alert("Upload Post")}>Add Post ➕</p>
+                <p onClick={togglePostScreen}>Add Post ➕</p>
+                <AddPost togglePostScreen={togglePostScreen} addpost={addpost} community_id={community}/>
             </div>
             <h1>{Community_Details!==null && Community_Details.name}</h1>
             <div>
