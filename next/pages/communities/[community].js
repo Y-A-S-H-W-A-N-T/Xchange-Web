@@ -1,11 +1,15 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import AddPost from '@/components/addPost';
+import AddPost from '@/components/addPost'
+import Comment_Section from '@/components/comment_section';
 
 export default function Community() {
 
     const [addpost,setaddpost] = useState(false)
+    const [post_id_for_comment,setPost_id_for_comment] = useState('')
+    const [post_number,setPost_number] = useState('')
+    const [showComments,setShowComments] = useState(false)
     const togglePostScreen = ()=>{
         setaddpost(!addpost)
     }
@@ -38,6 +42,12 @@ export default function Community() {
         })
     }
 
+    const Comment = async(id,ind)=>{
+        setPost_number(ind)
+        setPost_id_for_comment(id)
+        setShowComments(true)
+    }
+
   return (
     <div>
         <div onClick={Leave_Community} style={{display: 'flex', backgroundColor: 'red', cursor: 'pointer'}}>Leave</div>
@@ -55,7 +65,9 @@ export default function Community() {
                         ?
                         (
                             Community_Details.members.map((members,ind)=>(
-                                <p>{members.user_vtu}</p>
+                                <div key={ind}>
+                                    <p>{members.user_vtu}</p>
+                                </div>
                             ))
                         )
                         :
@@ -64,6 +76,27 @@ export default function Community() {
                         )
                     }
                 </div>
+            </div>
+            <div>
+            {
+                        Community_Details!==null
+                        ?
+                        (
+                            Community_Details.posts.map((post,ind)=>(
+                                <div key={post._id} style={{border: '2px red solid'}}>
+                                    <p>{post.post_title}</p>
+                                    <img src={post.post_media} alt='post' width={300} height={300}/>
+                                    <p onClick={()=>Comment(post._id,ind)}>💬</p>
+                                </div>
+                            ))
+                        )
+                        :
+                        (
+                            <div></div>
+                        )
+                    }
+                    {showComments && <Comment_Section post_id={post_id_for_comment} post_number={post_number} post={Community_Details} setShowComments={setShowComments} community_id={community}/>}
+
             </div>
         </div>
     </div>

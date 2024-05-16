@@ -45,7 +45,7 @@ export default function AddPost({ addpost, togglePostScreen, community_id }) {
             <h2>Post here</h2>
                 <input type="file" style={{display: 'none'}} id="fileInput" onChange={(e)=>setMedia(e.target.files[0])}/>
                 <label htmlFor="fileInput">Upload image</label>
-                <input type="text" placeholder="title" onChange={(e)=>setTitle(e.target.value)} value={title}/>
+                <input type="text" placeholder="Caption" onChange={(e)=>setTitle(e.target.value)} value={title}/>
                 <button onClick={Post}>POST</button>
           </div>
         </div>
