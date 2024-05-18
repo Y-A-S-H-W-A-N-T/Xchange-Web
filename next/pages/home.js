@@ -1,33 +1,11 @@
-import { useEffect, useState } from 'react';
-import Create from '../components/create'
-import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React from 'react'
 import Card from '../styles/card.module.css'
 
 export default function home() {
+
   const router = useRouter();
-
-  const [rooms,setRooms] = useState()
-  const [create,setCreate] = useState(false)
-  const [news,setNews] = useState()
-  const [VTU,setVTU] = useState()
-
-  useEffect(()=>{
-    let vtu = localStorage.getItem('vtu');
-    const new_vtu = vtu.replace(/^"(.*)"$/, '$1');
-    setVTU(new_vtu);
-    axios.get('http://localhost:3000/api/room')
-    .then((res)=>{
-      setRooms(res.data)
-    })
-    axios.get('http://localhost:3000/api/news/show_news')
-    .then((res)=>{
-      setNews(res.data)
-    })
-  },[])
-  console.log("ROOMS - > ",rooms)
 
   const Logout = ()=>{
     localStorage.removeItem('vtu')
@@ -35,18 +13,12 @@ export default function home() {
     router.replace('/')
   }
 
-  const toggleModal = ()=>{ setCreate(!create) }
-
   return (
     <div>
         <div>
           <div>
             <div onClick={Logout}><img alt='logout' src='./exit.png' height={50} width={50}/></div>
           </div>
-            <div onClick={()=>setCreate(!create)}>
-                <h1>Create ➕</h1>
-            </div>
-            {create && <Create modal={create} showModal={toggleModal}/>}
             <div className={Card.functionalities}>
               <div className={Card.card} onClick={()=>router.push('/chatroom')}>
                 <div className={Card.card_content}>

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import styles from "../styles/modal.module.css"
 
-export default function AddCommunity() {
+export default function AddCommunity({ setCreate }) {
 
   useEffect(()=>{
     let vtu = localStorage.getItem('vtu');
@@ -32,8 +33,11 @@ export default function AddCommunity() {
         })
   }
   return (
-    <div>
-        <div>
+    <div className={styles.modal}>
+        <div className={styles.modalContent}>
+            <span className={styles.close} onClick={()=>setCreate(false)}>
+              &times;
+            </span>
             <div>
             <h2>Create Community</h2>
             <div>

@@ -2,11 +2,13 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Image from 'next/image'
+import News from '../../components/addnews'
 
 export default function navbar() {
 
   const router = useRouter()
   const [news,setNews] = useState()
+  const [create,setCreate] = useState(false)
 
   useEffect(()=>{
     axios.get('http://localhost:3000/api/news/show_news')
@@ -17,6 +19,10 @@ export default function navbar() {
   
   return (
     <div>
+        <div onClick={()=>setCreate(true)}>
+          ➕
+        </div>
+          {create && <News setCreate={setCreate}/>}
         <div>
             {
                 news &&

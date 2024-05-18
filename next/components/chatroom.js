@@ -3,8 +3,9 @@ import axios from "axios";
 import { storage } from "../config";
 import { useRouter } from "next/router";
 import { uploadBytes, ref, getDownloadURL } from "firebase/storage"
+import styles from "../styles/modal.module.css"
 
-export default function chatroom() {
+export default function chatroom({ setCreate }) {
     
   const router = useRouter();
   const [image, setImage] = useState(null);
@@ -37,10 +38,12 @@ export default function chatroom() {
     })
   };
   return (
-    <div>
-        <div>
+    <div className={styles.modal}>
+        <div className={styles.modalContent}>
+            <span className={styles.close} onClick={()=>setCreate(false)}>
+              &times;
+            </span>
             <div>
-            <h2>Chat Room</h2>
             <div>
                 <input
                 placeholder="Room name"

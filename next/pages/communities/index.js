@@ -1,12 +1,14 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/router"
+import Community from "../../components/addcommunity"
 
 export default function Communities() {
 
     const router = useRouter()
 
     const [communities,setCommunities] = useState(null)
+    const [create,setCreate] = useState(false)
     const [VTU,setVTU] = useState('')
 
     useEffect(()=>{
@@ -42,6 +44,10 @@ export default function Communities() {
 
   return (
     <div>
+        <div onClick={()=>setCreate(true)}>➕</div>
+        <div>
+          {create && <Community setCreate={setCreate}/>}
+        </div>
         <div>
             {
                 communities &&

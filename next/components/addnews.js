@@ -3,8 +3,9 @@ import axios from "axios";
 import { storage } from "../config";
 import { useRouter } from "next/router";
 import { uploadBytes, ref, getDownloadURL } from "firebase/storage"
+import styles from "../styles/modal.module.css"
 
-export default function Addnews() {
+export default function Addnews({ setCreate }) {
     
   const router = useRouter();
   const [image, setImage] = useState(null);
@@ -37,8 +38,11 @@ const Img_ref = ref(storage, `/news/${news.name,'-',Date.now()}`);
     })
   };
   return (
-    <div>
-        <div>
+    <div className={styles.modal}>
+        <div className={styles.modalContent}>
+            <span className={styles.close} onClick={()=>setCreate(false)}>
+              &times;
+            </span>
             <div>
             <h2>NEWS</h2>
             <div>
