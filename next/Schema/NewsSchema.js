@@ -14,17 +14,7 @@ const newsSchema = new Schema({
     image: {
         type: String,
         require: true
-    },
-    comments: [
-        {
-            sender_vtu: {
-                type: String,
-            },
-            comment: {
-                type: String,
-            },
-        },
-    ]
+    }
 },{
     timestamps: true
 })

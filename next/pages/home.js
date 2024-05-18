@@ -3,8 +3,8 @@ import Create from '../components/create'
 import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import Nav from '../components/navbar'
-import React from 'react';
+import React from 'react'
+import Card from '../styles/card.module.css'
 
 export default function home() {
   const router = useRouter();
@@ -40,54 +40,41 @@ export default function home() {
   return (
     <div>
         <div>
-          <div className='navbar'>
-            <Nav/>
-          </div>
           <div>
-            <button onClick={Logout}>LOGOUT</button>
+            <div onClick={Logout}><img alt='logout' src='./exit.png' height={50} width={50}/></div>
           </div>
             <div onClick={()=>setCreate(!create)}>
                 <h1>Create ➕</h1>
             </div>
             {create && <Create modal={create} showModal={toggleModal}/>}
-            <div>
-              CHAT ROOMS
-              {
-                rooms &&
-                rooms.map((room,ind)=>(
-                  <div key={ind} style={{backgroundColor: 'lightblue'}} onClick={()=>router.push(`/chatroom/${room._id}`)}>
-                      <div>
-                        <h1>{room.name}</h1>
-                      </div>
-                      <div>
-                        <Image src={room.image} width={50} height={50} alt='room_image'/>
-                      </div>
-                      <div>
-                        <>{room.description}</>
-                      </div>
-                  </div>
-                ))
-              }
-            </div>
-            <p>-------------------------------------</p>
-            <div>
-              News
-              {
-                news &&
-                news.map((news,ind)=>(
-                  <div key={ind} style={{backgroundColor: 'lightblue'}}>
-                      <div>
-                        <h1>{news.headline}</h1>
-                      </div>
-                      <div>
-                        <Image src={news.image} width={400} height={200} alt='news image'/>
-                      </div>
-                      <div>
-                        <>{news.description}</>
-                      </div>
-                  </div>
-                ))
-              }
+            <div className={Card.functionalities}>
+              <div className={Card.card} onClick={()=>router.push('/chatroom')}>
+                <div className={Card.card_content}>
+                  <p className={Card.card_title}>Locker room</p>
+                  <p className={Card.card_description}>Create chat rooms and join with friends to chat.</p>
+                </div>
+                <div className={Card.card_image}>
+                  <img src='./lockerroom.jpg' alt='locker_room_img'/>
+                </div>
+              </div>
+              <div className={Card.card} onClick={()=>router.push('/news')}>
+                <div className={Card.card_content}>
+                  <p className={Card.card_title}>College News</p>
+                  <p className={Card.card_description}>Read and Upload college news.</p>
+                </div>
+                <div className={Card.card_image}>
+                  <img src='./news.jpg' alt='locker_room_img'/>
+                </div>
+              </div>
+              <div className={Card.card} onClick={()=>router.push('/communities')}>
+                <div className={Card.card_content}>
+                  <p className={Card.card_title}>Community</p>
+                  <p className={Card.card_description}>Join communities, Post things</p>
+                </div>
+                <div className={Card.card_image}>
+                  <img src='./community.jpg' alt='locker_room_img'/>
+                </div>
+              </div>
             </div>
         </div>
     </div>

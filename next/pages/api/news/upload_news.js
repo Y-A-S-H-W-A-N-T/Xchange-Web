@@ -5,8 +5,7 @@ export default async function POST(req,res) {
         const news = News({
             headline: req.body.headline,
             description: req.body.description,
-            image: req.body.image,
-            comments: []
+            image: req.body.image
         })
         await news.save()
         res.json({response: "News Uploaded", status: 200})

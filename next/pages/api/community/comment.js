@@ -9,7 +9,7 @@ export default async function POST(req,res) {
         )
         res.json({response: "Commented", status: 200})
     }
-    catch(err)
+    catch(err) 
     {
         res.json({response: "Error in Commenting", status: 400})
     }
