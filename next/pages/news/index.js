@@ -4,18 +4,16 @@ import axios from 'axios'
 import Image from 'next/image'
 import News from '../../components/addnews'
 
-export default function navbar() {
+export async function getStaticProps() {
+  const response = await fetch('http://localhost:3000/api/news/show_news')
+  const news = await response.json()
+  return { props: { news } }
+}
+
+export default function navbar({ news }) {
 
   const router = useRouter()
-  const [news,setNews] = useState()
   const [create,setCreate] = useState(false)
-
-  useEffect(()=>{
-    axios.get('http://localhost:3000/api/news/show_news')
-    .then((res)=>{
-      setNews(res.data)
-    })
-  },[])
   
   return (
     <div>

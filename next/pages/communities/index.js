@@ -3,11 +3,15 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/router"
 import Community from "../../components/addcommunity"
 
-export default function Communities() {
+export async function getStaticProps() {
+    const response = await fetch('http://localhost:3000/api/community/show_community')
+    const communities = await response.json()
+    return { props: { communities } }
+  }
+
+export default function Communities({ communities }) {
 
     const router = useRouter()
-
-    const [communities,setCommunities] = useState(null)
     const [create,setCreate] = useState(false)
     const [VTU,setVTU] = useState('')
 
@@ -15,15 +19,6 @@ export default function Communities() {
         let vtu = localStorage.getItem('vtu');
         const new_vtu = vtu.replace(/^"(.*)"$/, '$1');
         setVTU(new_vtu)
-        const getCommunities = async()=>{
-            await axios
-            .post('/api/community/show_community')
-            .then((res)=>{
-                setCommunities(res.data)
-                console.log(res.data)
-            })
-        }
-        getCommunities()
     },[])
 
     const JoinCommunity = async(e,id,community_name)=>{

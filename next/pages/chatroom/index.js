@@ -4,18 +4,16 @@ import axios from 'axios'
 import Image from 'next/image'
 import Chatroom from '@/components/chatroom'
 
-export default function navbar() {
+export async function getStaticProps() {
+  const response = await fetch('http://localhost:3000/api/room')
+  const lockers = await response.json()
+  return { props: { lockers } }
+}
+
+export default function navbar({ lockers }) {
 
   const router = useRouter()
-  const [rooms,setRooms] = useState()
   const [create,setCreate] = useState(false)
-
-  useEffect(()=>{
-    axios.get('http://localhost:3000/api/room')
-    .then((res)=>{
-      setRooms(res.data)
-    })
-  },[])
   
   return (
     <div>
@@ -25,8 +23,8 @@ export default function navbar() {
         </div>
         <div>
             {
-                rooms &&
-                rooms.map((room,ind)=>(
+                lockers &&
+                lockers.map((room,ind)=>(
                   <div key={ind} style={{backgroundColor: 'lightblue'}} onClick={()=>router.push(`/chatroom/${room._id}`)}>
                       <div>
                         <h1>{room.name}</h1>
