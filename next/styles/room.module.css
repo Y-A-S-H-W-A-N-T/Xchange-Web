@@ -9,11 +9,11 @@
   .messagesContainer {
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Add space between messages */
+    gap: 10px;
   }
   
   .message {
-    background-color: #acdd98;
+    background-color: #6f7de6;
     padding: 10px;
     border-radius: 15px;
     margin: 20px;

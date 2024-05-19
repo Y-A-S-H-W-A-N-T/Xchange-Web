@@ -10,8 +10,8 @@
     cursor: pointer;
     transition: box-shadow 0.3s ease;
     width: 30%; /* Adjust the width to fit three cards in a row */
-    margin: 20px;
-    margin-top: 10%;
+    margin: 25px;
+    margin-top: 15%;
   }
   
   .card:hover {
@@ -46,6 +46,14 @@
 
   .functionalities {
     display: flex;
+    margin-left: 50px;
+  }
+
+  .exit{
+    display: flex;
+    float: right;
+    margin-top: -15px;
+    cursor: pointer;
   }
 
   @media (max-width: 768px) {

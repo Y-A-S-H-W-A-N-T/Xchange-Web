@@ -10,9 +10,6 @@ const roomSchema = new Schema({
     description: {
         type: String,
     },
-    image: {
-        type: String,
-    },
     chats:[
         {
             sender_vtu: {

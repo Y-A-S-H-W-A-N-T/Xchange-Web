@@ -16,8 +16,8 @@ export default function home() {
   return (
     <div>
         <div>
-          <div>
-            <div onClick={Logout}><img alt='logout' src='./exit.png' height={50} width={50}/></div>
+          <div className={Card.exit}>
+            <div onClick={Logout}><img alt='logout' src='./exit.png' height={80} width={80}/></div>
           </div>
             <div className={Card.functionalities}>
               <div className={Card.card} onClick={()=>router.push('/chatroom')}>

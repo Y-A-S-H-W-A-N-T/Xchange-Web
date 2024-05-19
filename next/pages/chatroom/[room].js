@@ -63,10 +63,12 @@ export default function Home() {
                     <div key={ind} className={styles.messageContainer}>
                       {
                         val.message!=='' && 
-                        <div className={styles.message}>
-                          <p>
-                            {val.message}
-                          </p>
+                        <div className={styles.messageBox}>
+                          <div className={styles.message}>
+                            <p>
+                              {val.message}
+                            </p>
+                          </div>
                         </div>
                       }
                     </div>

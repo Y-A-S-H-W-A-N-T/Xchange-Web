@@ -5,8 +5,7 @@ export default async function POST(req,res) {
         try{
             const room = Room({
                 name: req.body.name,
-                description: req.body.description,
-                image: req.body.image
+                description: req.body.description
             })
             await room.save()
             res.json({response: "Chat Room Saved", status: 200})
