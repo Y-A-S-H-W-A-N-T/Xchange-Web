@@ -1,0 +1,53 @@
+/* Community.module.css */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.addButton {
+    cursor: pointer;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.communityList {
+    width: 100%;
+    max-width: 800px;
+}
+
+.communityCard {
+    border: 2px solid black;
+    padding: 10px;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.communityCard:hover {
+    transform: scale(1.02);
+}
+
+.communityName {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.communityDescription {
+    margin: 5px 0;
+}
+
+.memberStatus {
+    color: green;
+}
+
+.joinButton {
+    background-color: lightgreen;
+    cursor: pointer;
+    padding: 5px;
+    text-align: center;
+    width: fit-content;
+    margin-top: 10px;
+}

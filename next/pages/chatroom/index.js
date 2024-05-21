@@ -4,6 +4,7 @@ import axios from 'axios'
 import Image from 'next/image'
 import Chatroom from '@/components/chatroom'
 import styles from '../../styles/locker.module.css'
+import Passcode from '@/components/passcode'
 
 export async function getStaticProps() {
   const response = await fetch('http://localhost:3000/api/room')
@@ -15,6 +16,25 @@ export default function navbar({ lockers }) {
 
   const router = useRouter()
   const [create,setCreate] = useState(false)
+  const [privateRoom,setPrivateRoom] = useState({
+    pass: false,
+    passcode: '',
+    room_id: '',
+  })
+
+  const openChats = async(id,ind)=>{
+        setPrivateRoom((prev)=>({...prev,room_id: id}))
+        lockers[ind].private === true ? setPrivateRoom((prev)=>({...prev,pass: true})) : router.push(`/chatroom/${id}`)
+  }
+
+  const enterChat = async()=>{
+    await axios
+    .post('/api/room/enter_room',{ room_id: privateRoom.room_id, pass: privateRoom.passcode })
+    .then((res)=>{
+        res.data.status === 200 ? router.push(`/chatroom/${privateRoom.room_id}`) : alert('Wrong pass')
+    })
+    setPrivateRoom((prev)=>({...prev,pass: false}))
+  }
   
   return (
 <div className={styles.container}>
@@ -33,11 +53,13 @@ export default function navbar({ lockers }) {
                         </div>
                         <div className={styles.roomDescription}>
                             <p>{room.description}</p>
-                            <p className={styles.join} onClick={() => router.push(`/chatroom/${room._id}`)}>join chat</p>
+                            <p>{room.private ? 'Private' : 'Public' }</p>
+                            <p className={styles.join} onClick={()=>openChats(room._id,ind)}>join chat</p>
                         </div>
                     </div>
                 ))}
             </div>
+            {privateRoom.pass && <Passcode setPrivateRoom={setPrivateRoom} enterChat={enterChat}/>}
         </div>
   )
 }

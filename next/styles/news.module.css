@@ -1,5 +1,3 @@
-/* NewsPage.module.css */
-
 .container {
     padding: 20px;
     max-width: 900px;
@@ -15,7 +13,7 @@
 
 .newsContainer {
     overflow-x: auto;
-    padding-bottom: 20px; /* Add space at the bottom for better visual */
+    padding-bottom: 20px;
 }
 
 .newsCard {
@@ -23,10 +21,10 @@
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s;
-    margin-bottom: 20px; /* Add space between cards */
-    padding: 20px; /* Add padding for content */
-    display: flex; /* Use flexbox for layout */
-    align-items: center; /* Center vertically */
+    margin-bottom: 20px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
 }
 
 .newsCard:hover {
@@ -34,15 +32,15 @@
 }
 
 .newsContentContainer {
-    flex: 1; /* Take up remaining space */
+    flex: 1;
 }
 
 .newsImage {
     border-radius: 10px;
-    width: 200px; /* Adjust as needed */
-    height: auto; /* Maintain aspect ratio */
-    flex-shrink: 0; /* Prevent image from shrinking */
-    margin-right: 20px; /* Add space between image and text */
+    width: 200px;
+    height: auto;
+    flex-shrink: 0;
+    margin-right: 20px;
 }
 
 .newsHeadline {

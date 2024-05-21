@@ -7,6 +7,13 @@ const roomSchema = new Schema({
         type: String,
         require: true
     },
+    private: {
+        type: Boolean,
+        default: false
+    },
+    passcode: {
+        type: String
+    },
     description: {
         type: String,
     },

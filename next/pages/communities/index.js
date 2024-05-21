@@ -2,6 +2,7 @@ import axios from "axios"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/router"
 import Community from "../../components/addcommunity"
+import styles from '../../styles/community.module.css';
 
 export async function getStaticProps() {
     const response = await fetch('http://localhost:3000/api/community/show_community')
@@ -38,38 +39,39 @@ export default function Communities({ communities }) {
 
 
   return (
-    <div>
-        <div onClick={()=>setCreate(true)}>➕</div>
-        <div>
-          {create && <Community setCreate={setCreate}/>}
-        </div>
-        <div>
-            {
-                communities &&
-                communities.map((val,ind)=>(
-                    <div key={ind} style={{border: '2px black solid'}}
-                        onClick={()=>{
+    <div className={styles.container}>
+            <div onClick={() => setCreate(true)} className={styles.addButton}>➕</div>
+            <div>
+                {create && <Community setCreate={setCreate} />}
+            </div>
+            <div className={styles.communityList}>
+                {communities && communities.map((val, ind) => (
+                    <div 
+                        key={ind} 
+                        className={styles.communityCard}
+                        onClick={() => {
                             val.members.some(member => member.user_vtu === VTU)
-                            ? router.push( `/communities/${val._id}`)
-                            : alert("First Join the Community")
+                                ? router.push(`/communities/${val._id}`)
+                                : alert("First Join the Community");
                         }}
-                    
                     >
-                        <p>{val.name}</p>
-                        <p>{val.description}</p>
+                        <p className={styles.communityName}>{val.name}</p>
+                        <p className={styles.communityDescription}>{val.description}</p>
                         {val.members.some(member => member.user_vtu === VTU)
-                        ?
-                        (
-                            <p>Member ✔️</p>
-                        )
-                        :
-                        (
-                            <p onClick={(e)=>JoinCommunity(e,val._id,val.name)} style={{backgroundColor: 'lightgreen',cursor: 'pointer'}}>Join Community ➕</p>
-                        )}
+                            ? <p className={styles.memberStatus}>Member ✔️</p>
+                            : <p 
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    JoinCommunity(e, val._id, val.name);
+                                }} 
+                                className={styles.joinButton}
+                              >
+                                Join Community ➕
+                              </p>
+                        }
                     </div>
-                ))
-            }
+                ))}
+            </div>
         </div>
-    </div>
   )
 }

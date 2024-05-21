@@ -78,7 +78,7 @@ export default function Home() {
             }
             else{
               return(
-                <div className={styles.message_box}>
+                <div className={styles.message_box} key={ind}>
                     <div key={ind} className={styles.messageContainer}>
                       {val.sender_vtu}:
                       {
