@@ -26,7 +26,7 @@ export default function home() {
                   <p className={Card.card_description}>Create chat rooms and join with friends to chat.</p>
                 </div>
                 <div className={Card.card_image}>
-                  <img src='./lockerroom.jpg' alt='locker_room_img'/>
+                  <Image src='/lockerroom.jpg' alt='locker_room_img' height={500} width={500} priority={true}/>
                 </div>
               </div>
               <div className={Card.card} onClick={()=>router.push('/news')}>
@@ -35,7 +35,7 @@ export default function home() {
                   <p className={Card.card_description}>Read and Upload college news.</p>
                 </div>
                 <div className={Card.card_image}>
-                  <img src='./news.jpg' alt='locker_room_img'/>
+                  <Image src='/news.jpg' alt='locker_room_img' height={500} width={500} priority={true}/>
                 </div>
               </div>
               <div className={Card.card} onClick={()=>router.push('/communities')}>
@@ -44,7 +44,7 @@ export default function home() {
                   <p className={Card.card_description}>Join communities, Post things</p>
                 </div>
                 <div className={Card.card_image}>
-                  <img src='./community.jpg' alt='locker_room_img'/>
+                  <Image src='/community.jpg' alt='locker_room_img' height={500} width={500} priority={true}/>
                 </div>
               </div>
             </div>

@@ -14,9 +14,6 @@ const roomSchema = new Schema({
     passcode: {
         type: String
     },
-    description: {
-        type: String,
-    },
     chats:[
         {
             sender_vtu: {

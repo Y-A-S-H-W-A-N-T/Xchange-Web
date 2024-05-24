@@ -8,13 +8,13 @@ export default function chatroom({ setCreate }) {
   const router = useRouter();
   const [chatroom, setChatRoom] = useState({
     name: "",
-    description: "",
     private: false,
     passcode: ''
   })
   const Create = async () => {
+    if(chatroom.private && chatroom.passcode === '') return alert("Enter Pass Code") 
     console.log(chatroom)
-    if (chatroom.name === "" || chatroom.description === '') return alert("Enter name before uploading image");
+    if (chatroom.name === "") return alert("Enter name before uploading image");
     await axios
     .post("/api/room", chatroom)
     .then((res) => {
@@ -36,15 +36,6 @@ export default function chatroom({ setCreate }) {
                 placeholder="Room name"
                 onChange={(e) =>
                     setChatRoom((prev) => ({ ...prev, name: e.target.value }))
-                }
-                />
-                <input
-                placeholder="Description"
-                onChange={(e) =>
-                    setChatRoom((prev) => ({
-                    ...prev,
-                    description: e.target.value,
-                    }))
                 }
                 />
                 <input type="radio" name="type" onChange={()=>setChatRoom((prev)=>({...prev,private: true}))}/><label>Private</label>

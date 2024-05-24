@@ -1,5 +1,3 @@
-/* ChatRooms.module.css */
-
 .container {
     padding: 20px;
     background-color: #f0f0f0;
@@ -21,18 +19,21 @@
     flex-direction: column;
     gap: 20px;
     width: 100%;
-    max-width: 600px; /* Adjust this value as needed */
+    max-width: 400px; /* Adjusted for smaller room size */
     align-items: center;
 }
 
 .roomCard {
     background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
+    padding: 10px 20px; /* Increased padding for oval shape */
+    border-radius: 50px; /* Changed to make the card oval */
+    box-shadow: 0 10px 0px rgba(0, 0, 0, 0.1);
+    transition: transform 0.4s;
     width: 100%;
-    text-align: center;
+    text-align: left; /* Changed to left-align text */
+    display: inline;
+    flex-direction: column;
+    height: 100px; /* Set a fixed height for all room cards */
 }
 
 .roomCard:hover {
@@ -40,34 +41,45 @@
 }
 
 .roomHeader {
-    margin-bottom: 10px;
+    display: inline;
+    align-items: center; /* Center vertically */
+    font-family: cursive;
+    width: 100%;
+    padding-left: 20px; /* Add padding to align with room card padding */
 }
 
 .roomName {
-    font-size: 1.5em;
-    margin: 0;
-}
-
-.roomImage {
-    margin-bottom: 10px;
+    display: inline;
+    font-size: 1.2em; /* Slightly reduced font size */
+    margin-top: 0;
+    margin-right: auto; /* Pushes the roomName to the left */
 }
 
 .roomDescription {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
     font-size: 1em;
     color: #333;
 }
 
-.join{
-    background-color: rgba(53, 172, 53, 0.136);
-    padding: 10px;
+.join {
+    background-color: rgb(175, 50, 66);
+    padding: 7px;
     cursor: pointer;
-    width: 10%;
-    margin-left: auto;
     border-radius: 20px;
-    transition: 500ms;
+    transition: background-color 0.5s;
+    font-family: cursive;
+    color: white;
 }
 
-.join:hover{
-    transition: 500ms;
-    background-color: rgba(28, 111, 28, 0.323);
+.join:hover {
+    background-color: rgba(212, 89, 109, 0.323);
+}
+
+.pub_pri {
+    display: flex;
+    margin-left: auto;
+    font-size: 1.5em; /* Increased size for better visibility */
 }

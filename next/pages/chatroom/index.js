@@ -52,8 +52,7 @@ export default function navbar({ lockers }) {
                             <h1 className={styles.roomName}>{room.name}</h1>
                         </div>
                         <div className={styles.roomDescription}>
-                            <p>{room.description}</p>
-                            <p>{room.private ? 'Private' : 'Public' }</p>
+                            <p className={styles.pub_pri}>{room.private ? '🔒' : '' }</p>
                             <p className={styles.join} onClick={()=>openChats(room._id,ind)}>join chat</p>
                         </div>
                     </div>

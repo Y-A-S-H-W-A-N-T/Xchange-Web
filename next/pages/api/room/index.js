@@ -5,7 +5,6 @@ export default async function POST(req,res) {
         try{
             const room = Room({
                 name: req.body.name,
-                description: req.body.description,
                 private: req.body.private,
                 passcode: req.body.passcode
             })
