@@ -2,6 +2,31 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
+const postCommentSchema = new Schema({
+    sender_vtu: {
+        type: String
+    },
+    comment: {
+        type: String
+    }
+})
+
+const memberSchema = new Schema({
+    user_vtu: {
+        type: String
+    }
+})
+
+const postSchema = new Schema({
+    post_title: {
+        type: String
+    },
+    post_media: {
+        type: String
+    },
+    post_comments: [postCommentSchema]
+})
+
 const communitySchema = new Schema({
     leader_vtu: {
         type: String,
@@ -15,34 +40,8 @@ const communitySchema = new Schema({
         type: String,
         require: true
     },
-    members: [
-        {
-            user_vtu: {
-                type: String,
-            },
-        },
-    ],
-    posts: [
-        {
-            post_title: {
-                type: String,
-                require: true
-            },
-            post_media: {
-                type: String,
-            },
-            post_comments: [
-                {
-                    sender_vtu: {
-                        type: String,
-                    },
-                    comment: {
-                        type: String,
-                    },
-                },
-            ]
-        }
-    ]
+    members: [memberSchema],
+    posts: [postSchema]
 },{
     timestamps: true
 })
