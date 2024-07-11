@@ -2,6 +2,8 @@ import axios from 'axios'
 import login from '../styles/login.module.css'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { Provider } from 'react-redux';
+import { store } from '../components/redux/store'
 
 axios.post('http://localhost:3000/api/').then((res)=>console.log(res.data.msg))
 
@@ -32,16 +34,18 @@ export default function Home() {
   }
 
   return (
-    <div>
-        <div className={login.login_container}>
-            <div className={login.login_box}>
-                <input placeholder='VTU' className={login.input} onChange={(e)=>setStudent((prev)=>({...prev,vtu: e.target.value}))}/>
-                <input placeholder='PASSWORD' className={login.input} onChange={(e)=>setStudent((prev)=>({...prev,password: e.target.value}))}/>
-                <div className={login.submit}>
-                  <p onClick={Login}>LOGIN</p>
-                </div>
-            </div>
-        </div>
-    </div>
+    <Provider store={store}>
+      <div>
+          <div className={login.login_container}>
+              <div className={login.login_box}>
+                  <input placeholder='VTU' className={login.input} onChange={(e)=>setStudent((prev)=>({...prev,vtu: e.target.value}))}/>
+                  <input placeholder='PASSWORD' className={login.input} onChange={(e)=>setStudent((prev)=>({...prev,password: e.target.value}))}/>
+                  <div className={login.submit}>
+                    <p onClick={Login}>LOGIN</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </Provider>
   );
 }

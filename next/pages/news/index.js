@@ -3,17 +3,27 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import News from '../../components/addnews'
 import styles from '../../styles/news.module.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchNews } from '@/components/slices/newsSlice'
 
-export async function getStaticProps() {
-  const response = await fetch('http://localhost:3000/api/news/show_news')
-  const news = await response.json()
-  return { props: { news } }
-}
+
+// export async function getStaticProps() {
+//   const response = await fetch('http://localhost:3000/api/news/show_news')
+//   const news = await response.json()
+//   return { props: { news } }
+// }
 
 export default function navbar({ news }) {
-
   const router = useRouter()
   const [create,setCreate] = useState(false)
+  const dispatch = useDispatch()
+  const testNews = useSelector(state=> state.news.news)
+
+  useEffect(()=>{
+    dispatch(fetchNews())
+  },[])
+
+  console.log(testNews)
   
   return (
     <>
@@ -23,7 +33,7 @@ export default function navbar({ news }) {
               {create && <News setCreate={setCreate} />}
           </div>
           <div className={styles.newsContainer}>
-              {news && news.map((newsItem, ind) => (
+              {testNews && testNews.map((newsItem, ind) => (
                   <div key={ind} className={styles.newsCard}>
                       <div className={styles.newsContentContainer}>
                           <h1 className={styles.newsHeadline}>{newsItem.headline}</h1>

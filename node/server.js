@@ -1,4 +1,5 @@
-const { User, Room } = require('./schema')
+const PORT = 8000;
+const { User, Room, News } = require('./schema')
 
 
 const mongoose = require('mongoose')
@@ -49,7 +50,14 @@ io.on('connection', (socket) => {
     })
 });
 
-const PORT = 8000;
+
+app.get('/news',async(req,res)=>{
+  console.log("Hitting")
+  const result = await News.find({})
+  res.send(result)
+})
+
+
 
 server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

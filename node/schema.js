@@ -44,9 +44,27 @@ const userSchema = new Schema({
     }
 }, {
     timestamps: true
-});
+})
+
+const newsSchema = new Schema({
+    headline: {
+        type: String,
+        require: true
+    },
+    description: {
+        type: String,
+        require: true
+    },
+    image: {
+        type: String,
+        require: true
+    }
+},{
+    timestamps: true
+})
 
 const Room = mongoose.models['ROOM'] || mongoose.model('ROOM', roomSchema);
 const User = mongoose.models['VTU'] || mongoose.model('VTU', userSchema);
+const News = mongoose.models['NEWS'] || mongoose.model('NEWS', userSchema);
 
-module.exports = { Room, User };
+module.exports = { Room, User, News };
