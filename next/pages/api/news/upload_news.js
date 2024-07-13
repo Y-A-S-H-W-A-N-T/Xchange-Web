@@ -7,8 +7,8 @@ export default async function POST(req,res) {
             description: req.body.description,
             image: req.body.image
         })
-        await news.save()
-        res.json({response: "News Uploaded", status: 200})
+        const newNews = await news.save()
+        res.json({response: "News Uploaded", status: 200, data: newNews})
     }
     catch(err)
     {

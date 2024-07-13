@@ -1,14 +1,30 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { useRouter } from "next/router";
-import styles from "../styles/modal.module.css";
+import { useEffect, useState } from "react"
+import axios from "axios"
+import { useRouter } from "next/router"
+import styles from "../styles/modal.module.css"
+import { useDispatch, useSelector } from "react-redux"
+import { addCommunity, fetchCommunities } from "./slices/communityReducer"
 
 export default function AddCommunity({ setCreate }) {
+
+  const dispatch = useDispatch()
+  const { addstatus, error } = useSelector(state=> state.communities)
   const [community, setCommunity] = useState({
     name: '',
     description: '',
     leader: ''
-  });
+  })
+
+  useEffect(()=>{
+    if (addstatus==='succeeded'){
+      alert("Community Created")  
+      dispatch(fetchCommunities())
+      setCreate(false)
+    }
+    else if(addstatus==='failed'){
+      alert("Error in Creating Community")
+    }
+  },[addstatus,dispatch])
 
   useEffect(() => {
     const vtu = localStorage.getItem('vtu');
@@ -19,19 +35,13 @@ export default function AddCommunity({ setCreate }) {
   const router = useRouter();
 
   const Create = async () => {
-    if (community.name === "") return alert("Enter a name for community");
-    await axios
-      .post("/api/community/create_community", {
-        name: community.name,
-        description: community.description,
-        vtu: community.leader
-      })
-      .then((res) => {
-        res.data.status === 200
-          ? alert("Community Created")
-          : alert("Error in Creating Community");
-        router.reload();
-      });
+    if (community.name === "") return alert("Enter a name for community")
+    const newCommunity = {
+      name: community.name,
+      description: community.description,
+      vtu: community.leader
+    }
+    dispatch(addCommunity(newCommunity))
   };
 
   return (

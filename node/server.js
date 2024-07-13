@@ -54,16 +54,6 @@ io.on('connection', (socket) => {
 });
 
 
-
-app.post('/addnews',async(req,res)=>{
-  console.log(req.body)
-  const newNews = new News(req.body)
-  const response = await newNews.save()
-  console.log(response)
-  res.send(response)
-})
-
-
 server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 })

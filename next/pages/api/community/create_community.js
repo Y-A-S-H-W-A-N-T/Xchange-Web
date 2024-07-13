@@ -13,8 +13,8 @@ export default async function POST(req,res) {
             ],
             posts: []
         })
-        await community.save()
-        res.json({response: "Community Created", status: 200})
+        const newCommunity = await community.save()
+        res.json({response: "Community Created", status: 200, data: newCommunity})
     }
     catch(err)
     {

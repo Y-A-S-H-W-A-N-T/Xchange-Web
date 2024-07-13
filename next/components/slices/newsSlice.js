@@ -9,7 +9,7 @@ export const fetchNews = createAsyncThunk('news/fetchNews', async () => {
 
 export const addNews = createAsyncThunk('news/addNews', async(newNews)=>{
   const response = await axios.post('http://localhost:3000/api/news/upload_news',newNews)
-  return response
+  return response.data.data
 })
 
 const newsSlice = createSlice({

@@ -7,9 +7,9 @@ export const fetchCommunities = createAsyncThunk('community/fetchCommunities', a
   return data;
 })
 
-export const addNews = createAsyncThunk('news/addNews', async(newNews)=>{
-  const response = await axios.post('http://localhost:8000/addnews',newNews)
-  return response
+export const addCommunity = createAsyncThunk('news/addCommunity', async(newNews)=>{
+  const response = await axios.post('http://localhost:3000/api/community/create_community',newNews)
+  return response.data.data
 })
 
 const communitySlice = createSlice({
@@ -35,17 +35,17 @@ const communitySlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
-    //   .addCase(addNews.pending,(state)=>{
-    //     state.addstatus = 'pending'
-    //   })
-    //   .addCase(addNews.fulfilled, (state, action) => {
-    //     state.news.push(action.payload);
-    //     state.addstatus = 'succeeded';
-    //   })
-    //   .addCase(addNews.rejected,(state,action)=>{
-    //     state.addstatus = 'failed'
-    //     state.error = action.error.message
-    //   })
+      .addCase(addCommunity.pending,(state)=>{
+        state.addstatus = 'pending'
+      })
+      .addCase(addCommunity.fulfilled, (state, action) => {
+        state.communities.push(action.payload);
+        state.addstatus = 'succeeded';
+      })
+      .addCase(addCommunity.rejected,(state,action)=>{
+        state.addstatus = 'failed'
+        state.error = action.error.message
+      })
   },
 });
 
