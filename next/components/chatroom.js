@@ -1,15 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import styles from "../styles/modal.module.css";
+import { useDispatch } from "react-redux";
 
 export default function Chatroom({ setCreate }) {
+
+  const dispatch = useDispatch()
+
   const router = useRouter();
   const [chatroom, setChatRoom] = useState({
     name: "",
     private: false,
     passcode: "",
-  });
+  })
+
+  useEffect(()=>{
+    
+  })
 
   const Create = async () => {
     if (chatroom.private && chatroom.passcode === "") {

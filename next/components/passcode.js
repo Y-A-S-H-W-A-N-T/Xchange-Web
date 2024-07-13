@@ -8,7 +8,7 @@ export default function Passcode({ setPrivateRoom, enterChat }) {
             <span className={styles.close}  onClick={()=>setPrivateRoom((prev)=>({...prev,pass: false}))}>
               &times;
             </span>
-            <input placeholder="pass code"  onChange={(e)=>setPrivateRoom((prev)=>({...prev,passcode: e.target.value}))}/>
+            <input placeholder="pass code"  onChange={(e)=>setPrivateRoom((prev)=>({...prev,input: e.target.value}))}/>
             <button onClick={enterChat}>OK</button>
           </div>
         </div>

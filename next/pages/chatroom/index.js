@@ -17,7 +17,7 @@ import { fetchRooms } from '@/components/slices/roomSlice'
 export default function navbar({ lockers }) {
 
   const dispatch = useDispatch()
-  const { rooms, status, error } = useSelector(state=> state.rooms)
+  const { rooms, status, error } = useSelector(state=> state.rooms) // manage errors, add loading screen
   const router = useRouter()
 
   useEffect(()=>{
@@ -28,20 +28,26 @@ export default function navbar({ lockers }) {
   const [privateRoom,setPrivateRoom] = useState({
     pass: false,
     passcode: '',
-    room_id: '',
+    input: '',
+    id: ''
   })
 
-  const openChats = async(id,ind)=>{
-        setPrivateRoom((prev)=>({...prev,room_id: id}))
-        lockers[ind].private === true ? setPrivateRoom((prev)=>({...prev,pass: true})) : router.push(`/chatroom/${id}`)
+  const openChats = async(id,ind,pass)=>{
+        setPrivateRoom((prev)=>({...prev,passcode: pass, id: id})) // setting id for private room
+        rooms[ind].private === true ? setPrivateRoom((prev)=>({...prev,pass: true})) : router.push(`/chatroom/${id}`)
   }
 
   const enterChat = async()=>{
-    await axios
-    .post('/api/room/enter_room',{ room_id: privateRoom.room_id, pass: privateRoom.passcode })// Do not fetch for the passcode, store the passcode before itself for auth
-    .then((res)=>{
-        res.data.status === 200 ? router.push(`/chatroom/${privateRoom.room_id}`) : alert('Wrong pass')
-    })
+    privateRoom.input===privateRoom.passcode ? (
+      router.push(`/chatroom/${privateRoom.id}`) // id for private room
+    )
+    :
+    alert("Incorrect Passcode")
+    // await axios
+    // .post('/api/room/enter_room',{ room_id: privateRoom.room_id, pass: privateRoom.passcode })// Do not fetch for the passcode, store the passcode before itself for auth
+    // .then((res)=>{
+    //     res.data.status === 200 ? router.push(`/chatroom/${privateRoom.room_id}`) : alert('Wrong pass')
+    // })
     setPrivateRoom((prev)=>({...prev,pass: false}))
   }
   
@@ -62,7 +68,7 @@ export default function navbar({ lockers }) {
                         </div>
                         <div className={styles.roomDescription}>
                             <p className={styles.pub_pri}>{room.private ? '🔒' : '' }</p>
-                            <p className={styles.join} onClick={()=>openChats(room._id,ind)}>join chat</p>
+                            <p className={styles.join} onClick={()=>openChats(room._id,ind,room.passcode)}>join chat</p>
                         </div>
                     </div>
                 ))}
