@@ -11,6 +11,7 @@ const http = require('http');
 const express = require('express');
 const socketIo = require('socket.io');
 const cors = require('cors')
+const body_parser = require('body-parser')
 
 const app = express();
 const server = http.createServer(app);
@@ -19,7 +20,9 @@ const server = http.createServer(app);
 app.use(cors({
     origin: '*',
     methods: ['GET', 'POST']
-  }));
+}));
+
+app.use(body_parser.json())
 
   const io = socketIo(server, {
     cors: {
@@ -52,11 +55,18 @@ io.on('connection', (socket) => {
 
 
 app.get('/news',async(req,res)=>{
-  console.log("Hitting")
   const result = await News.find({})
   res.send(result)
 })
 
+
+app.post('/addnews',async(req,res)=>{
+  console.log(req.body)
+  const newNews = new News(req.body)
+  const response = await newNews.save()
+  console.log(response)
+  res.send(response)
+})
 
 
 server.listen(PORT, () => {

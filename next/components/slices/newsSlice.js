@@ -1,11 +1,16 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios'
 
 export const fetchNews = createAsyncThunk('news/fetchNews', async () => {
   const response = await fetch('http://localhost:8000/news')
   const data = await response.json();
-  console.log("before redux, check this - ",data)
   return data;
-});
+})
+
+export const addNews = createAsyncThunk('news/addNews', async(newNews)=>{
+  const response = await axios.post('http://localhost:8000/addnews',newNews)
+  return response
+})
 
 const newsSlice = createSlice({
   name: 'news',
@@ -13,6 +18,7 @@ const newsSlice = createSlice({
     news: [],
     status: 'idle',
     error: null,
+    addstatus: 'idle'
   },
   reducers: {
   },
@@ -29,9 +35,17 @@ const newsSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
-    //   .addCase(addItem.fulfilled, (state, action) => {
-    //     state.news.push(action.payload);
-    //   });
+      .addCase(addNews.pending,(state)=>{
+        state.addstatus = 'pending'
+      })
+      .addCase(addNews.fulfilled, (state, action) => {
+        state.news.push(action.payload);
+        state.addstatus = 'succeeded';
+      })
+      .addCase(addNews.rejected,(state,action)=>{
+        state.addstatus = 'failed'
+        state.error = action.error.message
+      })
   },
 });
 

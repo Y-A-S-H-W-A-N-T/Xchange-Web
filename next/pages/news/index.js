@@ -9,21 +9,20 @@ import { fetchNews } from '@/components/slices/newsSlice'
 
 // export async function getStaticProps() {
 //   const response = await fetch('http://localhost:3000/api/news/show_news')
-//   const news = await response.json()
-//   return { props: { news } }
+//   const NEWS = await response.json()
+//   return { props: { NEWS } }
 // }
 
-export default function navbar({ news }) {
+export default function navbar({ NEWS }) {
   const router = useRouter()
   const [create,setCreate] = useState(false)
   const dispatch = useDispatch()
-  const testNews = useSelector(state=> state.news.news)
+  const { news, status, error } = useSelector(state=> state.news)
 
   useEffect(()=>{
     dispatch(fetchNews())
-  },[])
-
-  console.log(testNews)
+    console.log("running")
+  },[dispatch])
   
   return (
     <>
@@ -33,7 +32,7 @@ export default function navbar({ news }) {
               {create && <News setCreate={setCreate} />}
           </div>
           <div className={styles.newsContainer}>
-              {testNews && testNews.map((newsItem, ind) => (
+              {news && news.map((newsItem, ind) => (
                   <div key={ind} className={styles.newsCard}>
                       <div className={styles.newsContentContainer}>
                           <h1 className={styles.newsHeadline}>{newsItem.headline}</h1>
