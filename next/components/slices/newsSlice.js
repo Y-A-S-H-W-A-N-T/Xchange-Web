@@ -2,13 +2,13 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios'
 
 export const fetchNews = createAsyncThunk('news/fetchNews', async () => {
-  const response = await fetch('http://localhost:8000/news')
+  const response = await fetch('http://localhost:3000/api/news/show_news')
   const data = await response.json();
   return data;
 })
 
 export const addNews = createAsyncThunk('news/addNews', async(newNews)=>{
-  const response = await axios.post('http://localhost:8000/addnews',newNews)
+  const response = await axios.post('http://localhost:3000/api/news/upload_news',newNews)
   return response
 })
 

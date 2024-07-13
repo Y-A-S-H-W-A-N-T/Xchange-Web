@@ -54,11 +54,6 @@ io.on('connection', (socket) => {
 });
 
 
-app.get('/news',async(req,res)=>{
-  const result = await News.find({})
-  res.send(result)
-})
-
 
 app.post('/addnews',async(req,res)=>{
   console.log(req.body)
