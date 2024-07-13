@@ -3,24 +3,33 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/router"
 import Community from "../../components/addcommunity"
 import styles from '../../styles/community.module.css';
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCommunities } from "@/components/slices/communityReducer";
 
-export async function getStaticProps() {
-    const response = await fetch('http://localhost:3000/api/community/show_community')
-    const communities = await response.json()
-    return { props: { communities } }
-  }
+// export async function getStaticProps() {
+//     const response = await fetch('http://localhost:3000/api/community/show_community')
+//     const communities = await response.json()
+//     return { props: { Oldcommunities } }
+//   }
 
-export default function Communities({ communities }) {
+export default function Communities({ Oldcommunities }) {
 
     const router = useRouter()
     const [create,setCreate] = useState(false)
     const [VTU,setVTU] = useState('')
+    
+    const dispatch = useDispatch()
+    const { communities, status, error } = useSelector(state=> state.communities)
 
     useEffect(()=>{
         let vtu = localStorage.getItem('vtu');
         const new_vtu = vtu.replace(/^"(.*)"$/, '$1');
         setVTU(new_vtu)
     },[])
+
+    useEffect(()=>{
+        dispatch(fetchCommunities())
+    },[dispatch])
 
     const JoinCommunity = async(e,id,community_name)=>{
         e.stopPropagation();

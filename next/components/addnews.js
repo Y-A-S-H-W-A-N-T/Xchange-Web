@@ -33,7 +33,7 @@ export default function Addnews({ setCreate }) {
       return alert("Fill the necessary details to publish news");
     }
 
-    const imgRef = ref(storage, `/news/${news.headline}-${Date.now()}`);
+    const imgRef = ref(storage, `/news/${news.headline}-${Date.now()}`)
     uploadBytes(imgRef, image).then((res) => {
       getDownloadURL(res.ref).then(async (link) => {
         // await axios
