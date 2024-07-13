@@ -7,7 +7,7 @@ export const fetchCommunities = createAsyncThunk('community/fetchCommunities', a
   return data;
 })
 
-export const addCommunity = createAsyncThunk('news/addCommunity', async(newNews)=>{
+export const addCommunity = createAsyncThunk('community/addCommunity', async(newNews)=>{
   const response = await axios.post('http://localhost:3000/api/community/create_community',newNews)
   return response.data.data
 })

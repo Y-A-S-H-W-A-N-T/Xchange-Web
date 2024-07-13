@@ -5,16 +5,25 @@ import Image from 'next/image'
 import Chatroom from '@/components/chatroom'
 import styles from '../../styles/locker.module.css'
 import Passcode from '@/components/passcode'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchRooms } from '@/components/slices/roomSlice'
 
-export async function getStaticProps() {
-  const response = await fetch('http://localhost:3000/api/room')
-  const lockers = await response.json()
-  return { props: { lockers } }
-}
+// export async function getStaticProps() {
+//   const response = await fetch('http://localhost:3000/api/room')
+//   const lockers = await response.json()
+//   return { props: { lockers } }
+// }
 
 export default function navbar({ lockers }) {
 
+  const dispatch = useDispatch()
+  const { rooms, status, error } = useSelector(state=> state.rooms)
   const router = useRouter()
+
+  useEffect(()=>{
+    dispatch(fetchRooms())
+  },[dispatch])
+
   const [create,setCreate] = useState(false)
   const [privateRoom,setPrivateRoom] = useState({
     pass: false,
@@ -29,7 +38,7 @@ export default function navbar({ lockers }) {
 
   const enterChat = async()=>{
     await axios
-    .post('/api/room/enter_room',{ room_id: privateRoom.room_id, pass: privateRoom.passcode })
+    .post('/api/room/enter_room',{ room_id: privateRoom.room_id, pass: privateRoom.passcode })// Do not fetch for the passcode, store the passcode before itself for auth
     .then((res)=>{
         res.data.status === 200 ? router.push(`/chatroom/${privateRoom.room_id}`) : alert('Wrong pass')
     })
@@ -43,7 +52,7 @@ export default function navbar({ lockers }) {
                 {create && <Chatroom setCreate={setCreate} />}
             </div>
             <div className={styles.roomsContainer}>
-                {lockers && lockers.map((room, ind) => (
+                {rooms && rooms.map((room, ind) => (
                     <div 
                         key={ind} 
                         className={styles.roomCard} 

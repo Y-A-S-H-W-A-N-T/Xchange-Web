@@ -8,8 +8,8 @@ export default async function POST(req,res) {
                 private: req.body.private,
                 passcode: req.body.passcode
             })
-            await room.save()
-            res.json({response: "Chat Room Saved", status: 200})
+            const newRoom = await room.save()
+            res.json({response: "Chat Room Saved", status: 200, data: newRoom})
         }
         catch(err)
         {
