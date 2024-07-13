@@ -1,23 +1,29 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { useRouter } from "next/router";
 import styles from "../styles/modal.module.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addRoom, fetchRooms } from "./slices/roomSlice";
 
 export default function Chatroom({ setCreate }) {
 
   const dispatch = useDispatch()
-
-  const router = useRouter();
+  const { addstatus, error } = useSelector(state=> state.rooms) // check for erros, add loading screen
   const [chatroom, setChatRoom] = useState({
     name: "",
     private: false,
     passcode: "",
   })
 
+  console.log(addstatus)
+
   useEffect(()=>{
-    
-  })
+    if(addstatus==='succeeded'){
+      dispatch(fetchRooms())
+      alert("Locker room created")
+      setCreate(false)
+    }
+  },[addstatus,dispatch])
+
+  console.log(chatroom)
 
   const Create = async () => {
     if (chatroom.private && chatroom.passcode === "") {
@@ -26,14 +32,15 @@ export default function Chatroom({ setCreate }) {
     if (chatroom.name === "") {
       return alert("Enter name before creating the room");
     }
-    await axios
-      .post("/api/room", chatroom)
-      .then((res) => {
-        res.data.status === 200
-          ? alert("Room Created")
-          : alert("Room was not created due to some issue");
-        router.reload();
-      });
+    dispatch(addRoom(chatroom))
+    // await axios
+    //   .post("/api/room", chatroom)
+    //   .then((res) => {
+    //     res.data.status === 200
+    //       ? alert("Room Created")
+    //       : alert("Room was not created due to some issue");
+    //     router.reload();
+    //   });
   };
 
   return (
@@ -60,17 +67,6 @@ export default function Chatroom({ setCreate }) {
               }
             />
             <label htmlFor="private">Private</label>
-          </div>
-          <div>
-            <input
-              type="radio"
-              name="type"
-              id="public"
-              onChange={() =>
-                setChatRoom((prev) => ({ ...prev, private: false }))
-              }
-            />
-            <label htmlFor="public">Public</label>
           </div>
           {chatroom.private && (
             <input

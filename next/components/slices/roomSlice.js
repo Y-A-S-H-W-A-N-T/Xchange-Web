@@ -7,8 +7,8 @@ export const fetchRooms = createAsyncThunk('rooms/fetchRooms', async () => {
   return data;
 })
 
-export const addRoom = createAsyncThunk('rooms/addRoom', async(newNews)=>{
-  const response = await axios.post('http://localhost:3000/api/room',newNews)
+export const addRoom = createAsyncThunk('rooms/addRoom', async(newroom)=>{
+  const response = await axios.post('http://localhost:3000/api/room',newroom)
   return response.data.data
 })
 
