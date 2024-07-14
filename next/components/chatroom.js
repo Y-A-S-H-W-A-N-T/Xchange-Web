@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "../styles/modal.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { addRoom, fetchRooms } from "./slices/roomSlice";
+import { addRoom, fetchRooms, resetAddStatus } from "./slices/roomSlice";
 
 export default function Chatroom({ setCreate }) {
 
@@ -18,8 +18,9 @@ export default function Chatroom({ setCreate }) {
   useEffect(()=>{
     if(addstatus==='succeeded'){
       dispatch(fetchRooms())
-      alert("Locker room created")
       setCreate(false)
+      dispatch(resetAddStatus())
+      alert("Locker room created")
     }
   },[addstatus,dispatch])
 

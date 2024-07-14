@@ -21,6 +21,9 @@ const roomSlice = createSlice({
     addstatus: 'idle'
   },
   reducers: {
+    resetAddStatus(state) {
+      state.addstatus = 'idle';
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -47,6 +50,7 @@ const roomSlice = createSlice({
         state.error = action.error.message
       })
   },
-});
+})
 
+export const { resetAddStatus } = roomSlice.actions
 export default roomSlice.reducer;
