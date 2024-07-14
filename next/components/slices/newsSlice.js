@@ -21,6 +21,9 @@ const newsSlice = createSlice({
     addstatus: 'idle'
   },
   reducers: {
+    resetAddStatus(state) {
+      state.addstatus = 'idle';
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -49,4 +52,5 @@ const newsSlice = createSlice({
   },
 });
 
+export const { resetAddStatus } = newsSlice.actions
 export default newsSlice.reducer;

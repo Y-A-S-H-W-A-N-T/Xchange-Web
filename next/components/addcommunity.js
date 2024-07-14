@@ -3,7 +3,7 @@ import axios from "axios"
 import { useRouter } from "next/router"
 import styles from "../styles/modal.module.css"
 import { useDispatch, useSelector } from "react-redux"
-import { addCommunity, fetchCommunities } from "./slices/communityReducer"
+import { addCommunity, fetchCommunities, resetAddStatus } from "./slices/communityReducer"
 
 export default function AddCommunity({ setCreate }) {
 
@@ -17,9 +17,10 @@ export default function AddCommunity({ setCreate }) {
 
   useEffect(()=>{
     if (addstatus==='succeeded'){
-      alert("Community Created")  
       dispatch(fetchCommunities())
       setCreate(false)
+      dispatch(resetAddStatus())
+      alert("Community Created")  
     }
     else if(addstatus==='failed'){
       alert("Error in Creating Community")

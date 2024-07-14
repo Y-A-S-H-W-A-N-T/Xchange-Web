@@ -21,6 +21,9 @@ const communitySlice = createSlice({
     addstatus: 'idle'
   },
   reducers: {
+    resetAddStatus(state) {
+      state.addstatus = 'idle';
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -49,4 +52,5 @@ const communitySlice = createSlice({
   },
 });
 
+export const { resetAddStatus } = communitySlice.actions
 export default communitySlice.reducer;

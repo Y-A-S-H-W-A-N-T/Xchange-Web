@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
 import styles from "../styles/modal.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { addNews, fetchNews } from "./slices/newsSlice";
+import { addNews, fetchNews, resetAddStatus } from "./slices/newsSlice";
 
 export default function Addnews({ setCreate }) {
   const router = useRouter();
@@ -21,8 +21,9 @@ export default function Addnews({ setCreate }) {
   useEffect(() => {
     if (addstatus === 'succeeded') {
       dispatch(fetchNews());
-      alert('News added successfully!')
       setCreate(false)
+      dispatch(resetAddStatus())
+      alert('News added successfully!')
     }
   }, [addstatus, dispatch]);
 
