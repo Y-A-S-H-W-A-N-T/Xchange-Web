@@ -6,27 +6,27 @@ const resolvers = {
             return await News.find({})
         }
     },
-    // Mutation: {
-    //     addBook: async(root,args)=>{
-    //         const newBook = new Book({
-    //             author: args.author,
-    //             copies: args.copies,
-    //             books: args.books
-    //         })
-    //         await newBook.save()
-    //         return newBook
-    //     },
-    //     updateBook: async(root,args)=>{
-    //         return await Book.findOneAndUpdate(
-    //             { _id: args.id },
-    //             { $set:  { books: args.books, copies: args.copies } },
-    //             { new: true }
-    //         )
-    //     },
-    //     deleteBook : async(root,args)=>{
-    //         return await Book.findOneAndDelete({_id: args.id})
-    //     }
-    // }
+    Mutation: {
+        addNews: async(root,args)=>{
+            const newNews = new News({
+                headline: args.headline,
+                description: args.description,
+                image: args.image
+            })
+            await newNews.save()
+            return newNews
+        },
+        // updateNews: async(root,args)=>{
+        //     return await Book.findOneAndUpdate(
+        //         { _id: args.id },
+        //         { $set:  { books: args.books, copies: args.copies } },
+        //         { new: true }
+        //     )
+        // },
+        // deleteNews : async(root,args)=>{
+        //     return await Book.findOneAndDelete({_id: args.id})
+        // }
+    }
 }
 
 export default resolvers

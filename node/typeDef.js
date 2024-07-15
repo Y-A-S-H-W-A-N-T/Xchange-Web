@@ -14,7 +14,7 @@ const typeDefs = gql`
     }
 
     type Mutation{
-        addnews(headline: String, description: String, image: String): news
+        addNews(headline: String, description: String, image: String): news
         updateNews(id: ID, headline: String, description: String, image: String): news
         deleteNews(id: ID): news
     }
