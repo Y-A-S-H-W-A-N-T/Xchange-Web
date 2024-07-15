@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
@@ -67,4 +67,4 @@ const Room = mongoose.models['ROOM'] || mongoose.model('ROOM', roomSchema);
 const User = mongoose.models['VTU'] || mongoose.model('VTU', userSchema);
 const News = mongoose.models['NEWS'] || mongoose.model('NEWS', newsSchema);
 
-module.exports = { Room, User, News };
+export { Room, User, News };

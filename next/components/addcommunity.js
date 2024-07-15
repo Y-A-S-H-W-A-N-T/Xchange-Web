@@ -3,7 +3,7 @@ import axios from "axios"
 import { useRouter } from "next/router"
 import styles from "../styles/modal.module.css"
 import { useDispatch, useSelector } from "react-redux"
-import { addCommunity, fetchCommunities, resetAddStatus } from "./slices/communityReducer"
+import { addCommunity, fetchCommunities, resetAddStatus } from "./slices/communitySlice"
 
 export default function AddCommunity({ setCreate }) {
 

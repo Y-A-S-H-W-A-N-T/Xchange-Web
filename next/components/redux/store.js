@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import newsReducer from '../slices/newsSlice'
-import communityReducer from '../slices/communityReducer'
+import communitySlice from '../slices/communitySlice'
 import roomSlice from '../slices/roomSlice';
 
 export const store = configureStore({
   reducer: {
     news: newsReducer,
-    communities: communityReducer,
+    communities: communitySlice,
     rooms: roomSlice
   },
 });

@@ -1,17 +1,19 @@
 const PORT = 8000;
-const { User, Room, News } = require('./schema')
+import { Room } from './schema.js';
+import mongoose from 'mongoose'
+import { ApolloServer } from 'apollo-server-express'
+import typeDefs from './typeDef.js'
+import resolvers from './resolver.js'
 
-
-const mongoose = require('mongoose')
 const MONGO_URL = 'mongodb+srv://yashwant:yashwant@cluster0.n8lyem8.mongodb.net/Xchange?retryWrites=true&w=majority&appName=Cluster0'
 
 mongoose.connect(MONGO_URL).then(()=>console.log("DATABASE CONNECTED"))
 
-const http = require('http');
-const express = require('express');
-const socketIo = require('socket.io');
-const cors = require('cors')
-const body_parser = require('body-parser')
+import http from 'http'
+import express from 'express'
+import { Server } from 'socket.io'
+import cors from 'cors'
+import bodyParser from 'body-parser';
 
 const app = express();
 const server = http.createServer(app);
@@ -22,9 +24,9 @@ app.use(cors({
     methods: ['GET', 'POST']
 }));
 
-app.use(body_parser.json())
+app.use(bodyParser.json())
 
-  const io = socketIo(server, {
+  const io = new Server(server, {
     cors: {
       origin: "http://localhost:3000",
       methods: ["GET", "POST"]
@@ -51,8 +53,18 @@ io.on('connection', (socket) => {
         console.log(result)
         socket.emit('chat',data)
     })
-});
+})
 
+
+const startApolloServer = async()=>{
+  const apolloserver = new ApolloServer({typeDefs, resolvers})
+  
+  await apolloserver.start()
+  
+  apolloserver.applyMiddleware({app, path: '/graphql'})
+  console.log("Running ApolloServer")
+}
+startApolloServer()
 
 server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
