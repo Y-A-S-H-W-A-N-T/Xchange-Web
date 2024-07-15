@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios'
+import { GET_NEWS } from '../grapql/newsQueries'
+import client from '../grapql/apolloserver';
 
 export const fetchNews = createAsyncThunk('news/fetchNews', async () => {
-  const response = await fetch('http://localhost:3000/api/news/show_news')
-  const data = await response.json();
-  return data;
+  const response = await client.query({ query: GET_NEWS });
+  return response.data.getNews
 })
 
 export const addNews = createAsyncThunk('news/addNews', async(newNews)=>{
