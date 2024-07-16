@@ -62,8 +62,8 @@ export default function Communities({ Oldcommunities }) {
                         className={styles.communityCard}
                         onClick={() => {
                             val.members.some(member => member.user_vtu === VTU)
-                                ? router.push(`/communities/${val._id}`)
-                                : alert("First Join the Community");
+                                ? router.push(`/communities/${val.id}`)
+                                : alert("First Join the Community")
                         }}
                     >
                         <p className={styles.communityName}>{val.name}</p>
@@ -73,7 +73,7 @@ export default function Communities({ Oldcommunities }) {
                             : <p 
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    JoinCommunity(e, val._id, val.name);
+                                    JoinCommunity(e, val.id, val.name);
                                 }} 
                                 className={styles.joinButton}
                               >
