@@ -4,7 +4,7 @@ import { useRouter } from "next/router"
 import Community from "../../components/addcommunity"
 import styles from '../../styles/community.module.css';
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCommunities } from "@/components/slices/communityReducer";
+import { fetchCommunities } from "@/components/slices/communitySlice";
 
 // export async function getStaticProps() {
 //     const response = await fetch('http://localhost:3000/api/community/show_community')

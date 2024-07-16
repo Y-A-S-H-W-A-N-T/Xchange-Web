@@ -24,10 +24,39 @@ const typeDefs = gql`
         chats: [chats]
     }
 
+    type members{
+        id: ID,
+        user_vtu: String
+    }
+
+    type post_comments{
+        id: ID,
+        sender_vtu: String,
+        comment: String
+    }
+
+    type posts{
+        id: ID
+        post_title: String,
+        post_media: String
+        post_comments: [post_comments]
+    }
+
+    type community{
+        id: ID,
+        leader_vtu: String,
+        name: String,
+        description: String,
+        members: [members],
+        posts: [posts]
+    }
+
     type Query{
         getNews: [news]
         getRooms: [room]
+        getCommunities: [community]
     }
+    
     
     input chatInput{
         sender_vtu: String,

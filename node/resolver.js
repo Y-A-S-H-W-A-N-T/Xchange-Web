@@ -1,4 +1,4 @@
-import { News, Room } from './schema.js'
+import { Community, News, Room } from './schema.js'
 
 const resolvers = {
     Query: {
@@ -7,6 +7,9 @@ const resolvers = {
         },
         getRooms: async()=>{
             return await Room.find({})
+        },
+        getCommunities: async()=>{
+            return await Community.find({})
         }
     },
     Mutation: {
