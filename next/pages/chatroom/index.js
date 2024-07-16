@@ -24,6 +24,8 @@ export default function navbar({ lockers }) {
     dispatch(fetchRooms())
   },[dispatch])
 
+  console.log(rooms)
+
   const [create,setCreate] = useState(false)
   const [privateRoom,setPrivateRoom] = useState({
     pass: false,
@@ -68,7 +70,7 @@ export default function navbar({ lockers }) {
                         </div>
                         <div className={styles.roomDescription}>
                             <p className={styles.pub_pri}>{room.private ? '🔒' : '' }</p>
-                            <p className={styles.join} onClick={()=>openChats(room._id,ind,room.passcode)}>join chat</p>
+                            <p className={styles.join} onClick={()=>openChats(room.id,ind,room.passcode)}>join chat</p>
                         </div>
                     </div>
                 ))}

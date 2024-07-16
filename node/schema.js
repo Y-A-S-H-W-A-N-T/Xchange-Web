@@ -2,30 +2,35 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
+
+const chatSchema = new Schema({
+    sender_vtu: {
+        type: String,
+    },
+    media: {
+        type: String,
+    },
+    message: {
+        type: String,
+        trim: true
+    }
+}, {
+    timestamps: true
+})
+
 const roomSchema = new Schema({
     name: {
         type: String,
         require: true
     },
-    description: {
-        type: String,
+    private: {
+        type: Boolean,
+        default: false
     },
-    image: {
-        type: String,
+    passcode: {
+        type: String
     },
-    chats:[
-        {
-            sender_vtu: {
-                type: String,
-            },
-            media: {
-                type: String,
-            },
-            message: {
-                type: String,
-            },
-        },
-    ]
+    chats: [chatSchema]
 },{
     timestamps: true
 })

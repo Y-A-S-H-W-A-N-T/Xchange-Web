@@ -20,6 +20,7 @@ export const addNews = createAsyncThunk('news/addNews', async(newNews)=>{
     }
   )
   const returnObject = {
+    id: response.data.addNews.id, // new line of code , 17-7-24
     headline: response.data.addNews.headline,
     description: response.data.addNews.description,
     image: response.data.addNews.image

@@ -10,16 +10,6 @@ const GET_NEWS = gql`
     }
   }
 `
-// const GET_BOOK = gql`
-//   query GETBOOK($bookId: ID!) {
-//     book(id: $bookId) {
-//       id
-//       copies
-//       author
-//     }
-//   }
-// `
-
 const ADD_NEWS = gql`
   mutation addNews($headline: String, $description: String, $image: String) {
     addNews(headline: $headline, description: $description, image: $image) {

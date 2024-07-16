@@ -47,9 +47,7 @@ export default function Home() {
         setMedia(link);
       });
     });
-  };
-
-  console.log(media);
+  }
 
   return (
     <>

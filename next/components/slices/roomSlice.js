@@ -1,15 +1,29 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios'
+import client from '../grapql/apolloserver'
+import { ADD_ROOM, GET_ROOMS } from '../grapql/roomQueries';
 
 export const fetchRooms = createAsyncThunk('rooms/fetchRooms', async () => {
-  const response = await fetch('http://localhost:3000/api/room')
-  const data = await response.json();
-  return data;
+  const response = await client.query({ query: GET_ROOMS, fetchPolicy: 'network-only' })
+  return response.data.getRooms
 })
 
 export const addRoom = createAsyncThunk('rooms/addRoom', async(newroom)=>{
-  const response = await axios.post('http://localhost:3000/api/room',newroom)
-  return response.data.data
+  const response = await client.mutate(
+    {
+      mutation: ADD_ROOM,
+      variables: {
+        input : {
+          name: newroom.name,
+          private: newroom.private,
+          passcode: newroom.passcode,
+        }
+      },
+    }
+  )
+
+  const room = response.data.addRoom;
+  return  { id: room.id, name: room.name, private: room.private, passcode: room.passcode, chats: room.chats }
 })
 
 const roomSlice = createSlice({

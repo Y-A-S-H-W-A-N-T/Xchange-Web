@@ -1,21 +1,27 @@
-import { News } from './schema.js'
+import { News, Room } from './schema.js'
 
 const resolvers = {
     Query: {
         getNews: async()=>{
             return await News.find({})
+        },
+        getRooms: async()=>{
+            return await Room.find({})
         }
     },
     Mutation: {
-        addNews: async(root,args)=>{
+        addNews: async(_,args)=>{
             const newNews = new News({
                 headline: args.headline,
                 description: args.description,
                 image: args.image
             })
-            await newNews.save()
-            return newNews
+            return await newNews.save()
         },
+        addRoom: async (_, { input }) => {
+            const newRoom = new Room(input);
+            return await newRoom.save();
+          },
         // updateNews: async(root,args)=>{
         //     return await Book.findOneAndUpdate(
         //         { _id: args.id },

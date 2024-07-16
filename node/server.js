@@ -37,7 +37,7 @@ io.on('connection', (socket) => {
   socket.on('connected',async(room_id)=>{
       console.log("Room Chat")
       const room_chats = await Room.findOne({ _id: room_id }, { chats: 1 })
-      const pastMessages = room_chats ? room_chats.chats : [];
+      const pastMessages = room_chats ? room_chats.chats : []
       socket.emit('pastMessages', pastMessages);
     })
       socket.on('chat',async(data)=>{
