@@ -21,7 +21,6 @@ export default function navbar({ NEWS }) {
 
   useEffect(()=>{
     dispatch(fetchNews())
-    console.log("running")
   },[dispatch])
   
   return (

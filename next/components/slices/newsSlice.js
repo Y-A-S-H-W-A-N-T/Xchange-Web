@@ -1,16 +1,30 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios'
-import { GET_NEWS } from '../grapql/newsQueries'
+import { ADD_NEWS, GET_NEWS } from '../grapql/newsQueries'
 import client from '../grapql/apolloserver';
 
 export const fetchNews = createAsyncThunk('news/fetchNews', async () => {
-  const response = await client.query({ query: GET_NEWS });
+  const response = await client.query({ query: GET_NEWS, fetchPolicy: 'network-only' })
   return response.data.getNews
 })
 
 export const addNews = createAsyncThunk('news/addNews', async(newNews)=>{
-  const response = await axios.post('http://localhost:3000/api/news/upload_news',newNews)
-  return response.data.data
+  const response = await client.mutate(
+    {
+      mutation: ADD_NEWS,
+      variables: {
+        headline: newNews.headline,
+        description: newNews.description,
+        image: newNews.image
+      }
+    }
+  )
+  const returnObject = {
+    headline: response.data.addNews.headline,
+    description: response.data.addNews.description,
+    image: response.data.addNews.image
+  }
+  return  returnObject
 })
 
 const newsSlice = createSlice({
@@ -48,6 +62,7 @@ const newsSlice = createSlice({
       })
       .addCase(addNews.rejected,(state,action)=>{
         state.addstatus = 'failed'
+        console.log(action.error.message)
         state.error = action.error.message
       })
   },

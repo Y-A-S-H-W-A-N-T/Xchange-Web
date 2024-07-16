@@ -20,14 +20,16 @@ const GET_NEWS = gql`
 //   }
 // `
 
-// const ADD_BOOK = gql`
-//   mutation addBook($author: String, $books: String, $copies: String) {
-//     addBook(author: $author, books: $books, copies: $copies) {
-//       id
-//       author
-//     }
-//   }
-// `
+const ADD_NEWS = gql`
+  mutation addNews($headline: String, $description: String, $image: String) {
+    addNews(headline: $headline, description: $description, image: $image) {
+      id
+      headline
+      description
+      image
+    }
+  }
+`
   
 
 // const REMOVE_BOOK = gql`
@@ -50,4 +52,4 @@ const GET_NEWS = gql`
 // `
 
 
-export { GET_NEWS }
+export { GET_NEWS, ADD_NEWS }

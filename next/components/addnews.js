@@ -21,6 +21,7 @@ export default function Addnews({ setCreate }) {
   useEffect(() => {
     if (addstatus === 'succeeded') {
       dispatch(fetchNews());
+      console.log("Data Refetched")
       setCreate(false)
       dispatch(resetAddStatus())
       alert('News added successfully!')
