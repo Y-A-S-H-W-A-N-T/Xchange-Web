@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios'
 import client from '../grapql/apolloserver'
-import { GET_COMMUNITIES } from '../grapql/communityQueries';
+import { GET_COMMUNITIES, ADD_COMMUNITY } from '../grapql/communityQueries';
 
 export const fetchCommunities = createAsyncThunk('community/fetchCommunities', async () => {
   const response = await client.query({ query: GET_COMMUNITIES, fetchPolicy: 'network-only' })
@@ -9,8 +9,30 @@ export const fetchCommunities = createAsyncThunk('community/fetchCommunities', a
 })
 
 export const addCommunity = createAsyncThunk('community/addCommunity', async(newcommunity)=>{
-  const response = await axios.post('http://localhost:3000/api/community/create_community',newcommunity)
-  return response.data.data
+  const response = await client.mutate(
+    {
+      mutation: ADD_COMMUNITY,
+      variables: {
+        input: {
+          leader_vtu: newcommunity.leader_vtu,
+          name: newcommunity.name,
+          description: newcommunity.description,
+          members: newcommunity.members || [],
+          posts: newcommunity.posts || [],
+        },
+      },
+    }
+  )
+
+  const community = response.data.addCommunity;
+  return  { 
+    id: community.id,
+    name: community.name,
+    leader_vtu: community.leader_vtu,
+    description: community.description,
+    members: community.members,
+    posts: community.posts
+  }
 })
 
 const communitySlice = createSlice({

@@ -21,6 +21,8 @@ export default function Communities({ Oldcommunities }) {
     const dispatch = useDispatch()
     const { communities, status, error } = useSelector(state=> state.communities)
 
+    console.log(communities)
+
     useEffect(()=>{
         let vtu = localStorage.getItem('vtu');
         const new_vtu = vtu.replace(/^"(.*)"$/, '$1');

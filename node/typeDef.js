@@ -1,7 +1,6 @@
 import { gql } from "apollo-server-express"
 
 const typeDefs = gql`
-
     type news{
         id: ID,
         headline: String,
@@ -51,23 +50,39 @@ const typeDefs = gql`
         posts: [posts]
     }
 
-    type Query{
-        getNews: [news]
-        getRooms: [room]
-        getCommunities: [community]
-    }
-    
-    
-    input chatInput{
-        sender_vtu: String,
-        media: String,
-        message: String
-    }
-
     input roomInput{
         name: String,
         private: Boolean,
         passcode: String,
+    }
+
+    input MemberInput {
+        user_vtu: String
+    }
+
+    input PostCommentInput {
+        sender_vtu: String
+        comment: String
+    }
+
+    input PostInput {
+        post_title: String
+        post_media: String
+        post_comments: [PostCommentInput]
+    }
+
+    input communityInput {
+        leader_vtu: String
+        name: String
+        description: String
+        members: [MemberInput]
+        posts: [PostInput]
+    }
+
+    type Query{
+        getNews: [news]
+        getRooms: [room]
+        getCommunities: [community]
     }
 
     type Mutation{
@@ -76,7 +91,8 @@ const typeDefs = gql`
         deleteNews(id: ID): news
 
         addRoom(input: roomInput): room
-        addChatToRoom(id: ID, input: chatInput): room
+
+        addCommunity(input: communityInput): community
     }
 `
 

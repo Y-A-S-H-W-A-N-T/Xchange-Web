@@ -22,9 +22,18 @@ const resolvers = {
             return await newNews.save()
         },
         addRoom: async (_, { input }) => {
-            const newRoom = new Room(input);
-            return await newRoom.save();
-          },
+            const newRoom = new Room(input)
+            return await newRoom.save()
+        },
+        addCommunity: async(_,{ input }) => {
+            try{
+                const newCommunity = new Community(input)
+                return await newCommunity.save()
+            }
+            catch(err){
+                console.log(err)
+            }
+        }
         // updateNews: async(root,args)=>{
         //     return await Book.findOneAndUpdate(
         //         { _id: args.id },
