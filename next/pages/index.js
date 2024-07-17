@@ -2,14 +2,14 @@ import axios from 'axios'
 import login from '../styles/login.module.css'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { Provider } from 'react-redux';
-import { store } from '../components/redux/store'
+import { useDispatch } from 'react-redux'
+import { registerUser } from '@/components/slices/userSlice'
 
 axios.post('http://localhost:3000/api/').then((res)=>console.log(res.data.msg))
 
 export default function Home() {
 
-  const router = useRouter();
+  const router = useRouter()
 
   const [student,setStudent] = useState({
     "vtu": '',
@@ -21,6 +21,8 @@ export default function Home() {
     vtu? router.replace('/home'): console.log("SHOW LOADING SCREEN")
   },[])
 
+  const dispatch = useDispatch()
+
   const Login = async()=>{
     if(student.vtu==='' || student.password==='')
       return alert('Enter Details')
@@ -29,12 +31,12 @@ export default function Home() {
       if(res.data.status===400) return alert("Wrong Credentials")
         localStorage.setItem('name', JSON.stringify(res.data.name))
         localStorage.setItem('vtu', JSON.stringify(res.data.vtu))
+        dispatch(registerUser(res.data.vtu))
         router.replace('/home')
     })
   }
 
   return (
-    <Provider store={store}>
       <div>
           <div className={login.login_container}>
               <div className={login.login_box}>
@@ -46,6 +48,5 @@ export default function Home() {
               </div>
           </div>
       </div>
-    </Provider>
   );
 }

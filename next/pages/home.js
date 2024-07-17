@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React from 'react'
+import React, { useEffect } from 'react'
 import Card from '../styles/card.module.css'
+import { useSelector } from 'react-redux';
 
 export default function home() {
 
@@ -12,6 +13,15 @@ export default function home() {
     localStorage.removeItem('name')
     router.replace('/')
   }
+
+  const user = useSelector(state=> state.user)
+  console.log(user)
+
+  useEffect(()=>{
+    let vtu = localStorage.getItem('vtu')
+    vtu === null ? router.replace('/') : ''
+    // create a model which asks you to Login first, before entering the site.
+  })
 
   return (
     <div>
