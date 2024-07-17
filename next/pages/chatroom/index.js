@@ -26,6 +26,9 @@ export default function navbar({ lockers }) {
 
   console.log(rooms)
 
+  const user = useSelector(state=> state.user)
+  console.log(user)
+
   const [create,setCreate] = useState(false)
   const [privateRoom,setPrivateRoom] = useState({
     pass: false,

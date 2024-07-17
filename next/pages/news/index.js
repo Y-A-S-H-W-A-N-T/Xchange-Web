@@ -22,6 +22,9 @@ export default function navbar({ NEWS }) {
   useEffect(()=>{
     dispatch(fetchNews())
   },[dispatch])
+
+  const user = useSelector(state=> state.user)
+  console.log(user)
   
   return (
     <>

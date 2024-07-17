@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import newsReducer from '../slices/newsSlice'
 import communitySlice from '../slices/communitySlice'
 import roomSlice from '../slices/roomSlice';

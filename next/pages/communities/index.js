@@ -29,6 +29,9 @@ export default function Communities({ Oldcommunities }) {
         setVTU(new_vtu)
     },[])
 
+    const user = useSelector(state=> state.user)
+    console.log(user)
+
     useEffect(()=>{
         dispatch(fetchCommunities())
     },[dispatch])
