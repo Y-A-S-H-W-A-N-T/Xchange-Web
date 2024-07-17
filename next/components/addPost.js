@@ -19,12 +19,13 @@ export default function AddPost({ addpost, togglePostScreen, community_id }) {
     const dispatch = useDispatch()
 
     useEffect(()=>{
-      if (resetAddPostStatus==='idle'){
+      if (addpoststatus==='succeeded'){
         togglePostScreen()
         alert("Post Added")
-        // refetch the posts after posting
+        router.reload()
+        dispatch(resetAddPostStatus())
       }
-    })
+    },[addpoststatus])
 
     const Post = async()=>{
         const Img_ref = ref(storage, `/community/posts/${title,'-',Date.now()}`);

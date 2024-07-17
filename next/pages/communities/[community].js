@@ -29,7 +29,7 @@ export default function Community() {
             })
         }
         getCommunityDetails()
-    },[router])
+    },[community])
 
     const Leave_Community = async()=>{
         alert("This will Remove you from Community")
