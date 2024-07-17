@@ -42,6 +42,14 @@ const resolvers = {
                 { new: true }
             )
             return response
+        },
+        joinCommunity: async(_,{ communityID, vtu }) => {
+            const response = await Community.findByIdAndUpdate(
+                communityID,
+                { $push: { members: { user_vtu: vtu } } },
+                { new: true }
+            )
+            return response
         }
         // updateNews: async(root,args)=>{
         //     return await Book.findOneAndUpdate(

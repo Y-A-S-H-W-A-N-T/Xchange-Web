@@ -93,6 +93,7 @@ const typeDefs = gql`
 
         addCommunity(input: communityInput): community
         addPostToCommunity(communityID: ID, post: PostInput): community
+        joinCommunity(communityID: ID, vtu: String): members
     }
 `
 
