@@ -13,7 +13,6 @@ export default function home() {
   const dispatch = useDispatch()
 
   const Logout = ()=>{
-    localStorage.removeItem('vtu')
     localStorage.removeItem('name')
     dispatch(signout())
     router.replace('/')

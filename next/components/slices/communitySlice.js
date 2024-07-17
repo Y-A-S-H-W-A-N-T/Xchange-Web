@@ -13,7 +13,7 @@ export const addCommunity = createAsyncThunk('community/addCommunity', async(new
       mutation: ADD_COMMUNITY,
       variables: {
         input: {
-          leader_vtu: newcommunity.leader_vtu,
+          leader_vtu: newcommunity.vtu,
           name: newcommunity.name,
           description: newcommunity.description,
           members: newcommunity.members || [],

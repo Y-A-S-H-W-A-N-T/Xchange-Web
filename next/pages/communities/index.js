@@ -16,21 +16,13 @@ export default function Communities({ Oldcommunities }) {
 
     const router = useRouter()
     const [create,setCreate] = useState(false)
-    const [VTU,setVTU] = useState('')
     
     const dispatch = useDispatch()
     const { communities, status, error } = useSelector(state=> state.communities)
 
     console.log(communities)
 
-    useEffect(()=>{
-        let vtu = localStorage.getItem('vtu');
-        const new_vtu = vtu.replace(/^"(.*)"$/, '$1');
-        setVTU(new_vtu)
-    },[])
-
-    const user = useSelector(state=> state.user)
-    console.log(user)
+    const user = useSelector(state=> state.user.vtu.vtu)
 
     useEffect(()=>{
         dispatch(fetchCommunities())
@@ -41,16 +33,15 @@ export default function Communities({ Oldcommunities }) {
         await axios
         .post('/api/community/join_member',{
             community_id: id,
-            user_vtu: VTU 
+            user_vtu: user 
         })
         .then((res)=>{
             res.data.status===200
             ? alert(`You have Joined the ${community_name} Community`)
             : alert("Error in Joining Community, Please Try Again")
         })
-        router.reload()
+        router.push(`/communities/${id}`)
     }
-
 
   return (
     <div className={styles.container}>
@@ -64,14 +55,14 @@ export default function Communities({ Oldcommunities }) {
                         key={ind} 
                         className={styles.communityCard}
                         onClick={() => {
-                            val.members.some(member => member.user_vtu === VTU)
+                            val.members.some(member => member.user_vtu === user)
                                 ? router.push(`/communities/${val.id}`)
                                 : alert("First Join the Community")
                         }}
                     >
                         <p className={styles.communityName}>{val.name}</p>
                         <p className={styles.communityDescription}>{val.description}</p>
-                        {val.members.some(member => member.user_vtu === VTU)
+                        {val.members.some(member => member.user_vtu === user)
                             ? <p className={styles.memberStatus}>Member ✔️</p>
                             : <p 
                                 onClick={(e) => {

@@ -10,9 +10,10 @@ export default function AddCommunity({ setCreate }) {
   const { addstatus, error } = useSelector(state=> state.communities)
   const [community, setCommunity] = useState({
     name: '',
-    description: '',
-    leader: ''
+    description: ''
   })
+
+  const user = useSelector(state=> state.user.vtu.vtu)
 
   useEffect(()=>{
     if (addstatus==='succeeded'){
@@ -26,20 +27,15 @@ export default function AddCommunity({ setCreate }) {
     }
   },[addstatus,dispatch])
 
-  useEffect(() => {
-    const vtu = localStorage.getItem('vtu');
-    const VTU = vtu ? vtu.replace(/^"(.*)"$/, '$1') : '';
-    setCommunity((prev) => ({ ...prev, leader: VTU }));
-  }, []);
-
-  const router = useRouter();
+  const router = useRouter()
+  console.log(user)
 
   const Create = async () => {
     if (community.name === "") return alert("Enter a name for community")
     const newCommunity = {
       name: community.name,
       description: community.description,
-      vtu: community.leader
+      vtu: user
     }
     dispatch(addCommunity(newCommunity))
   };
