@@ -1,43 +1,41 @@
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import Card from '../styles/card.module.css'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
+import { signout } from '@/components/slices/userSlice';
 
 export default function home() {
 
   const router = useRouter();
 
+  const dispatch = useDispatch()
+
   const Logout = ()=>{
     localStorage.removeItem('vtu')
     localStorage.removeItem('name')
+    dispatch(signout())
     router.replace('/')
   }
 
   const [vtu,setVtu] = useState('')
 
-  const user = useSelector(state=> state.user)
-  console.log(user)
+  const user = useSelector(state=> state.user.vtu)
 
-  useEffect(()=>{
-    let vtu = localStorage.getItem('vtu')
-    setVtu(vtu)
-    // vtu === null ? router.replace('/') : ''
-    // create a model which asks you to Login first, before entering the site.
-  })
-
-  if(vtu===null){
+  if(user===null){
     return (
       <div>
-        <Link href='/'>GO TO HOME</Link>
+        <Link href='/'>LOGIN FIRST</Link>
       </div>
     )
   }
 
+  console.log(user)
+
   return (
     <div>
-        {vtu && <div>
+        {user && <div>
           <div className={Card.exit}>
             <div onClick={Logout}><img alt='logout' src='./exit.png' height={80} width={80}/></div>
           </div>

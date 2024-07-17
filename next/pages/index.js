@@ -3,13 +3,14 @@ import login from '../styles/login.module.css'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
-import { registerUser } from '@/components/slices/userSlice'
+import { signin } from '@/components/slices/userSlice'
 
 axios.post('http://localhost:3000/api/').then((res)=>console.log(res.data.msg))
 
 export default function Home() {
 
   const router = useRouter()
+  const dispatch = useDispatch()
 
   const [student,setStudent] = useState({
     "vtu": '',
@@ -18,11 +19,8 @@ export default function Home() {
 
   useEffect(()=>{
     let vtu = localStorage.getItem('vtu')
-    vtu? router.replace('/home'): console.log("SHOW LOADING SCREEN")
+    vtu!==null?router.replace('/home') : console.log("LOADING")
   },[])
-
-
-  const dispatch = useDispatch()
 
   const Login = async()=>{
     if(student.vtu==='' || student.password==='')
@@ -32,22 +30,24 @@ export default function Home() {
       if(res.data.status===400) return alert("Wrong Credentials")
         localStorage.setItem('name', JSON.stringify(res.data.name))
         localStorage.setItem('vtu', JSON.stringify(res.data.vtu))
-        dispatch(registerUser(res.data.vtu))
+        dispatch(signin({vtu: student.vtu}))
         router.replace('/home')
     })
   }
 
   return (
-      <div>
+      <>
+        <div>
           <div className={login.login_container}>
-              <div className={login.login_box}>
-                  <input placeholder='VTU' className={login.input} onChange={(e)=>setStudent((prev)=>({...prev,vtu: e.target.value}))}/>
-                  <input placeholder='PASSWORD' className={login.input} onChange={(e)=>setStudent((prev)=>({...prev,password: e.target.value}))}/>
-                  <div className={login.submit}>
-                    <p onClick={Login}>LOGIN</p>
-                  </div>
-              </div>
-          </div>
-      </div>
+                <div className={login.login_box}>
+                    <input placeholder='VTU' className={login.input} onChange={(e)=>setStudent((prev)=>({...prev,vtu: e.target.value}))}/>
+                    <input placeholder='PASSWORD' className={login.input} onChange={(e)=>setStudent((prev)=>({...prev,password: e.target.value}))}/>
+                    <div className={login.submit}>
+                      <p onClick={Login}>LOGIN</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </>
   );
 }

@@ -1,16 +1,22 @@
-import { createSlice } from '@reduxjs/toolkit'
+// userSlice.js
+import { createSlice } from '@reduxjs/toolkit';
+
+const initialState = {
+  vtu: null
+};
 
 const userSlice = createSlice({
   name: 'user',
-  initialState: {
-    user: '',
-  },
+  initialState,
   reducers: {
-    registerUser(state,action){
-        state.user = action.payload
+    signin: (state, action) => {
+      state.vtu = action.payload
+    },
+    signout: (state) => {
+      state.vtu = null
     }
   },
-})
+});
 
-export const { registerUser } = userSlice.actions
+export const { signin, signout } = userSlice.actions;
 export default userSlice.reducer;
