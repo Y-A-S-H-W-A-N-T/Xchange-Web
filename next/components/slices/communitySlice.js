@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios'
 import client from '../grapql/apolloserver'
-import { GET_COMMUNITIES, ADD_COMMUNITY } from '../grapql/communityQueries';
+import { GET_COMMUNITIES, ADD_COMMUNITY, ADD_POST } from '../grapql/communityQueries';
 
 export const fetchCommunities = createAsyncThunk('community/fetchCommunities', async () => {
   const response = await client.query({ query: GET_COMMUNITIES, fetchPolicy: 'network-only' })
@@ -35,18 +34,49 @@ export const addCommunity = createAsyncThunk('community/addCommunity', async(new
   }
 })
 
+export const addPostToCommunity = createAsyncThunk('community/addPostToCommunity', async (Post) => {
+  console.log("POST == ",Post)
+  const response = await client.mutate(
+    {
+      mutation: ADD_POST,
+      variables: {
+        communityID: Post.community_id,
+        post: {
+          post_title: Post.post_title,
+          post_media: Post.post_media
+        },
+      },
+    }
+  )
+  console.log(response)
+  const community = response.data.addPostToCommunity
+
+  return  {
+    id: community.id,
+    name: community.name,
+    leader_vtu: community.leader_vtu,
+    description: community.description,
+    members: community.members,
+    posts: community.posts
+  }
+})
+
 const communitySlice = createSlice({
   name: 'community',
   initialState: {
     communities: [],
     status: 'idle',
     error: null,
-    addstatus: 'idle'
+    addstatus: 'idle',
+    addpoststatus: 'idle'
   },
   reducers: {
     resetAddStatus(state) {
       state.addstatus = 'idle';
     },
+    resetAddPostStatus(state){
+      state.addpoststatus = 'idle'
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -72,8 +102,19 @@ const communitySlice = createSlice({
         state.addstatus = 'failed'
         state.error = action.error.message
       })
+      .addCase(addPostToCommunity.pending,(state)=>{
+        state.addpoststatus = 'pending'
+      })
+      .addCase(addPostToCommunity.fulfilled, (state, action) => {
+        state.communities.push(action.payload);
+        state.addpoststatus = 'succeeded';
+      })
+      .addCase(addPostToCommunity.rejected,(state,action)=>{
+        state.addpoststatus = 'failed'
+        state.error = action.error.message
+      })
   },
 });
 
-export const { resetAddStatus } = communitySlice.actions
+export const { resetAddStatus, resetAddPostStatus } = communitySlice.actions
 export default communitySlice.reducer;

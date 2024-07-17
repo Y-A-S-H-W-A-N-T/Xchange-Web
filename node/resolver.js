@@ -33,6 +33,15 @@ const resolvers = {
             catch(err){
                 console.log(err)
             }
+        },
+        addPostToCommunity: async(_,{ communityID, post }) => {
+            console.log(communityID,"-",post)
+            const response = await Community.findByIdAndUpdate(
+                communityID,
+                { $push: { posts: post } },
+                { new: true }
+            )
+            return response
         }
         // updateNews: async(root,args)=>{
         //     return await Book.findOneAndUpdate(

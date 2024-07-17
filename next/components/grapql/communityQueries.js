@@ -59,5 +59,29 @@ const ADD_COMMUNITY = gql`
 //   }
 // `
 
+const ADD_POST = gql`
+    mutation AddPostToCommunity($communityID: ID, $post: PostInput) {
+        addPostToCommunity(communityID: $communityID, post: $post) {
+            id
+            name
+            description
+            leader_vtu
+            posts {
+                id
+                post_media
+                post_title
+                post_comments {
+                    comment
+                    sender_vtu
+                }
+            }
+            members {
+                id
+                user_vtu
+            }
+        }
+    }
+`
 
-export { GET_COMMUNITIES, ADD_COMMUNITY }
+
+export { GET_COMMUNITIES, ADD_COMMUNITY, ADD_POST }

@@ -68,7 +68,6 @@ const typeDefs = gql`
     input PostInput {
         post_title: String
         post_media: String
-        post_comments: [PostCommentInput]
     }
 
     input communityInput {
@@ -93,6 +92,7 @@ const typeDefs = gql`
         addRoom(input: roomInput): room
 
         addCommunity(input: communityInput): community
+        addPostToCommunity(communityID: ID, post: PostInput): community
     }
 `
 

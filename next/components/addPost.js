@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { storage } from "../config";
 import { useRouter } from "next/router";
 import { uploadBytes, ref, getDownloadURL } from "firebase/storage"
 import styles from "../styles/modal.module.css"
+import { addPostToCommunity, resetAddPostStatus } from "./slices/communitySlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function AddPost({ addpost, togglePostScreen, community_id }) {
 
@@ -12,23 +14,28 @@ export default function AddPost({ addpost, togglePostScreen, community_id }) {
     const [title,setTitle] = useState('')
     const [media,setMedia] = useState('')
 
+    const { addpoststatus } = useSelector(state=> state.communities)
+
+    const dispatch = useDispatch()
+
+    useEffect(()=>{
+      if (resetAddPostStatus==='idle'){
+        togglePostScreen()
+        alert("Post Added")
+        // refetch the posts after posting
+      }
+    })
+
     const Post = async()=>{
         const Img_ref = ref(storage, `/community/posts/${title,'-',Date.now()}`);
         uploadBytes(Img_ref, media).then((res) => {
         getDownloadURL(res.ref).then(async (link) => {
-            console.log(link)
-            await axios
-            .post("/api/community/upload_post", {
-                community_id: community_id,
-                title: title,
-                media: link
-            })
-            .then((res) => {
-                res.data.status === 200
-                ? alert("Posted")
-                : alert("Error in Posting")
-                router.reload();
-            });
+            const newPost = {
+              community_id: community_id,
+              post_title: title,
+              post_media:  link
+            }
+            dispatch(addPostToCommunity(newPost))
         });
         })
     }

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
 import { useRouter } from "next/router"
 import styles from "../styles/modal.module.css"
 import { useDispatch, useSelector } from "react-redux"
