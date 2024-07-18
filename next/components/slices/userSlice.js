@@ -2,7 +2,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  vtu: null
+  vtu: ''
 };
 
 const userSlice = createSlice({
@@ -13,7 +13,7 @@ const userSlice = createSlice({
       state.vtu = action.payload
     },
     signout: (state) => {
-      state.vtu = null
+      state.vtu = ''
     }
   },
 });

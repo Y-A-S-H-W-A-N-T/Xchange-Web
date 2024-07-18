@@ -2,9 +2,11 @@ import axios from "axios"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/router"
 import Community from "../../components/addcommunity"
-import styles from '../../styles/community.module.css';
-import { useDispatch, useSelector } from "react-redux";
-import { fetchCommunities } from "@/components/slices/communitySlice";
+import styles from '../../styles/community.module.css'
+import { useDispatch, useSelector } from "react-redux"
+import { fetchCommunities } from "@/components/slices/communitySlice"
+import { JOIN_COMMUNITY } from "@/components/grapql/communityQueries"
+import { useMutation } from "@apollo/client"
 
 // export async function getStaticProps() {
 //     const response = await fetch('http://localhost:3000/api/community/show_community')
@@ -20,7 +22,9 @@ export default function Communities({ Oldcommunities }) {
     const dispatch = useDispatch()
     const { communities, status, error } = useSelector(state=> state.communities)
 
-    console.log(communities)
+    console.log("Total communities : ",communities)
+
+    const [joinCommunity,{loading}] = useMutation(JOIN_COMMUNITY)
 
     const user = useSelector(state=> state.user.vtu.vtu)
 
@@ -29,18 +33,22 @@ export default function Communities({ Oldcommunities }) {
     },[dispatch])
 
     const JoinCommunity = async(e,id,community_name)=>{
-        e.stopPropagation();
-        await axios
-        .post('/api/community/join_member',{
-            community_id: id,
-            user_vtu: user 
+        e.stopPropagation();        
+        joinCommunity({
+            variables: {
+                communityId: id,
+                vtu: user
+            }
         })
-        .then((res)=>{
-            res.data.status===200
-            ? alert(`You have Joined the ${community_name} Community`)
-            : alert("Error in Joining Community, Please Try Again")
+        .then((response)=>{
+            console.log(response)
+            if (response.data.joinCommunity.id!==null || '') {
+                router.push(`/communities/${id}`)
+            }
+            else {
+                alert("Error in Joining Community")
+            }
         })
-        router.push(`/communities/${id}`)
     }
 
   return (
@@ -62,6 +70,9 @@ export default function Communities({ Oldcommunities }) {
                     >
                         <p className={styles.communityName}>{val.name}</p>
                         <p className={styles.communityDescription}>{val.description}</p>
+
+                        <p>{val.members.length} members joined</p>
+
                         {val.members.some(member => member.user_vtu === user)
                             ? <p className={styles.memberStatus}>Member ✔️</p>
                             : <p 

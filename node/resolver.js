@@ -45,7 +45,9 @@ const resolvers = {
         },
         joinCommunity: async(_,{ communityID, vtu }) => {
             const response = await Community.findByIdAndUpdate(
-                communityID,
+                {   
+                    _id: communityID,
+                },
                 { $push: { members: { user_vtu: vtu } } },
                 { new: true }
             )

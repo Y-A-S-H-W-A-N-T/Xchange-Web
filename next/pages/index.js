@@ -2,7 +2,7 @@ import axios from 'axios'
 import login from '../styles/login.module.css'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { signin } from '@/components/slices/userSlice'
 
 axios.post('http://localhost:3000/api/').then((res)=>console.log(res.data.msg))
@@ -17,9 +17,10 @@ export default function Home() {
     "password": ''
   })
 
+  const user = useSelector(state=>state.user.vtu)
+
   useEffect(()=>{
-    let vtu = localStorage.getItem('vtu')
-    vtu!==null?router.replace('/home') : console.log("LOADING")
+    user!=='' || undefined || ''? router.replace('/home') : console.log("LOADING")
   },[])
 
   const Login = async()=>{

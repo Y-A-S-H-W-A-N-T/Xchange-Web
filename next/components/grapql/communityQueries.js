@@ -83,5 +83,14 @@ const ADD_POST = gql`
     }
 `
 
+const JOIN_COMMUNITY = gql`
+    mutation JoinCommunity($communityId: ID, $vtu: String) {
+        joinCommunity(communityID: $communityId, vtu: $vtu) {
+            id
+            user_vtu
+        }
+    }
+`
 
-export { GET_COMMUNITIES, ADD_COMMUNITY, ADD_POST }
+
+export { GET_COMMUNITIES, ADD_COMMUNITY, ADD_POST, JOIN_COMMUNITY }

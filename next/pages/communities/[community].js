@@ -22,12 +22,12 @@ export default function Community() {
     useEffect(()=>{
         const getCommunityDetails = async()=>{
             await axios
-            .post('/api/community/selected_community',{ community_id: community })
+            .post('/api/community/selected_community',{ community_id: community     })
             .then((res)=>{
                 setCommunity_Details(res.data)
                 console.log(res.data)
             })
-        }
+        }// pending: Add GraphQL API here
         getCommunityDetails()
     },[community])
 

@@ -17,15 +17,14 @@ export default function home() {
     dispatch(signout())
     router.replace('/')
   }
-
-  const [vtu,setVtu] = useState('')
-
   const user = useSelector(state=> state.user.vtu)
 
-  if(user===null){
+  console.log(user)
+
+  if(user===''){
     return (
       <div>
-        <Link href='/'>LOGIN FIRST</Link>
+        {user==='' && <Link href='/'>LOGIN FIRST</Link>}
       </div>
     )
   }
