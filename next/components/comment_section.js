@@ -1,28 +1,30 @@
 import { useEffect, useState } from "react"
 import styles from "../styles/modal.module.css"
 import axios from "axios"
+import { useDispatch, useSelector } from "react-redux"
+import { fetchCommunities } from "./slices/communitySlice"
 
-export default function Coment_Section({ setShowComments, post_id, post, community_id, post_number }) {
+export default function Coment_Section({ setShowComments, post_id, community_number, community_id, post_number }) {
+
+  const dispatch = useDispatch()
+
+  const Post = useSelector(state=> state.communities.communities[community_number].posts[post_number].post_comments)
+
+  const user = useSelector(state=> state.user.vtu.vtu)
 
   const [comment,setComment] = useState({
-    comment_sender: '',
+    comment_sender: user,
     comment_payload: '',
     post_id: post_id,
     community_id: community_id
   })
   console.log("Comment", comment)
 
-  useEffect(()=>{
-    let vtu = localStorage.getItem('vtu');
-    const VTU = vtu.replace(/^"(.*)"$/, '$1');
-    setComment((prev)=>({...prev, comment_sender: VTU}))
-  },[])
-
   const Send_message = async()=>{
     await axios.post('/api/community/comment',comment)
     .then((res) => {
       res.data.status === 200
-      ? console.log(res.data.response)
+      ? dispatch(fetchCommunities())
       : alert(res.data.response)
       setComment((prev)=>({...prev,comment_payload: ''}))
     });
@@ -35,10 +37,9 @@ export default function Coment_Section({ setShowComments, post_id, post, communi
             <span className={styles.close} onClick={()=>setShowComments(false)}>
               &times;
             </span>
-            {console.log("sadadadsd", post.posts[post_number].post_comments)}
             <p>
               {
-                post.posts[post_number].post_comments.map((comment,ind)=>(
+                Post.map((comment,ind)=>(
                   <div key={ind}>
                       <p>{comment.comment}</p>
                   </div>

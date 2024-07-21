@@ -83,7 +83,7 @@ export default function Community() {
                                 <div key={post._id} style={{border: '2px red solid'}}>
                                     <p>{post.post_title}</p>
                                     <img src={post.post_media} alt='post' width={300} height={300}/>
-                                    <p onClick={()=>Comment(post._id,ind)}>💬</p>
+                                    <p onClick={()=>Comment(post.id,ind)}>💬</p>
                                 </div>
                             ))
                         )
@@ -92,7 +92,7 @@ export default function Community() {
                             <div></div>
                         )
                     }
-                    {showComments && <Comment_Section post_id={post_id_for_comment} post_number={post_number} post={selectedCommunity} setShowComments={setShowComments} community_id={community}/>}
+                    {showComments && <Comment_Section post_id={post_id_for_comment} post_number={post_number} community_number={index} setShowComments={setShowComments} community_id={community}/>}
                 </div>
             </div>
         </>}
