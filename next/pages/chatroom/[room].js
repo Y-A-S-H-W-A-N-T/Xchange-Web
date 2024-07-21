@@ -5,6 +5,7 @@ import { storage } from '../../config';
 import { uploadBytes, ref, getDownloadURL } from 'firebase/storage';
 import Image from 'next/image';
 import styles from '../../styles/room.module.css';
+import { useSelector } from 'react-redux';
 
 const socket = io('http://localhost:8000/');
 
@@ -12,21 +13,19 @@ export default function Home() {
   
   const router = useRouter();
   const { room } = router.query;
-  const [media, setMedia] = useState('');
-  const [vtu, setVtu] = useState(null);
+  const [media, setMedia] = useState('')
   const [oldMessages, setOldMessages] = useState([{}]);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState('')
+
+  const vtu = useSelector(state=> state.user.vtu.vtu)
 
   useEffect(() => {
-    let vtu = localStorage.getItem('vtu');
-    const VTU = vtu.replace(/^"(.*)"$/, '$1');
-    setVtu(VTU);
     socket.emit('connected', room);
     socket.on('pastMessages', past => {
       setOldMessages(past);
       console.log(past);
     });
-  }, [message]);
+  },[room, router, message]);
 
   const SEND = () => {
     if(media==='' && message==='') return
@@ -34,8 +33,8 @@ export default function Home() {
       room_id: room,
       message: message,
       media: media,
-      sender_vtu: vtu,
-    });
+      sender_vtu: user,
+    })
     setMessage('')
     setMedia('')
   };

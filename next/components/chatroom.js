@@ -34,14 +34,6 @@ export default function Chatroom({ setCreate }) {
       return alert("Enter name before creating the room");
     }
     dispatch(addRoom(chatroom))
-    // await axios
-    //   .post("/api/room", chatroom)
-    //   .then((res) => {
-    //     res.data.status === 200
-    //       ? alert("Room Created")
-    //       : alert("Room was not created due to some issue");
-    //     router.reload();
-    //   });
   };
 
   return (
