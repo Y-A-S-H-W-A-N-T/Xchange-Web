@@ -11,6 +11,7 @@ export default function Home() {
 
   const router = useRouter()
   const dispatch = useDispatch()
+  const [loading, setLoading] = useState(true)
 
   const [student,setStudent] = useState({
     "vtu": '',
@@ -20,7 +21,7 @@ export default function Home() {
   const user = useSelector(state=>state.user.vtu)
 
   useEffect(()=>{
-    user!=='' || undefined || ''? router.replace('/home') : console.log("LOADING")
+    user!=='' || undefined || ''? router.replace('/home') : setLoading(false)
   },[])
 
   const Login = async()=>{
@@ -32,13 +33,18 @@ export default function Home() {
         localStorage.setItem('name', JSON.stringify(res.data.name))
         localStorage.setItem('vtu', JSON.stringify(res.data.vtu))
         dispatch(signin({vtu: student.vtu}))
+        setLoading(false)
         router.replace('/home')
     })
   }
 
   return (
       <>
-        <div>
+        {
+        loading?
+        <div>LOADING</div>
+        :
+        (<div>
           <div className={login.login_container}>
                 <div className={login.login_box}>
                     <input placeholder='VTU' className={login.input} onChange={(e)=>setStudent((prev)=>({...prev,vtu: e.target.value}))}/>
@@ -48,7 +54,7 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-        </div>
+        </div>)}
       </>
   );
 }

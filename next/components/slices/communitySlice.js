@@ -35,7 +35,6 @@ export const addCommunity = createAsyncThunk('community/addCommunity', async(new
 })
 
 export const addPostToCommunity = createAsyncThunk('community/addPostToCommunity', async (Post) => {
-  console.log("POST == ",Post)
   const response = await client.mutate(
     {
       mutation: ADD_POST,

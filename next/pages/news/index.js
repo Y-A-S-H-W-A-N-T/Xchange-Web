@@ -24,7 +24,6 @@ export default function navbar({ NEWS }) {
   },[dispatch])
 
   const user = useSelector(state=> state.user)
-  console.log(user)
   
   return (
     <>

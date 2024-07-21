@@ -28,11 +28,13 @@ export default function Communities({ Oldcommunities }) {
 
     const user = useSelector(state=> state.user.vtu.vtu)
 
+    console.log(communities)
+
     useEffect(()=>{
         dispatch(fetchCommunities())
     },[dispatch])
 
-    const JoinCommunity = async(e,id,community_name)=>{
+    const JoinCommunity = async(e,id)=>{
         e.stopPropagation();        
         joinCommunity({
             variables: {
@@ -64,7 +66,7 @@ export default function Communities({ Oldcommunities }) {
                         className={styles.communityCard}
                         onClick={() => {
                             val.members.some(member => member.user_vtu === user)
-                                ? router.push(`/communities/${val.id}`)
+                                ? router.push(`/communities/${val.id}/${ind}`)
                                 : alert("First Join the Community")
                         }}
                     >
@@ -78,7 +80,7 @@ export default function Communities({ Oldcommunities }) {
                             : <p 
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    JoinCommunity(e, val.id, val.name);
+                                    JoinCommunity(e, val.id);
                                 }} 
                                 className={styles.joinButton}
                               >

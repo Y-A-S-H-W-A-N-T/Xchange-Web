@@ -19,8 +19,6 @@ export default function home() {
   }
   const user = useSelector(state=> state.user.vtu)
 
-  console.log(user)
-
   if(user===''){
     return (
       <div>
