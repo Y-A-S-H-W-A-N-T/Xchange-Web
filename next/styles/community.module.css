@@ -1,88 +1,64 @@
+/* community.module.css */
+
 .communityPage {
     display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    background-color: #f0f0f0;
-    min-height: 100vh;
+    position: relative; /* Add relative positioning for sidebar toggle */
 }
 
 .sidebar {
-    width: 20%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    width: 260px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    background-color: #fff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    transform: translateX(0); /* Show sidebar by default */
+}
+
+.sidebarHidden {
+    transform: translateX(-100%); /* Hide sidebar off-screen */
+}
+
+.sidebarToggle {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000; /* Make sure it's above other content */
+    background: #0070f3;
+    border: none;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.5em;
+}
+
+.Closesidebar{
+    float: right;
+    z-index: 1000; /* Make sure it's above other content */
+    border: none;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 2.5em;
 }
 
 .communityContent {
-    width: 75%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-.leaveCommunity {
-    background-color: red;
-    color: white;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    text-align: center;
-    width: 100%;
-}
-
-.addPostSection {
-    display: flex;
-    justify-content: flex-start;
-    margin-bottom: 20px;
-}
-
-.togglePost {
-    cursor: pointer;
-    color: #0070f3;
-    font-size: 1.2em;
-}
-
-.communityName {
-    font-size: 2em;
-    margin-bottom: 20px;
-    text-align: left;
-    color: #333;
-}
-
-.membersSection {
-    margin-bottom: 20px;
-}
-
-.membersToggle {
-    cursor: pointer;
-    color: #0070f3;
-    font-size: 1.2em;
-    text-align: left;
-}
-
-.membersList {
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
-}
-
-.postsSection::-webkit-scrollbar {
-    display: none;
-}
-
-.memberItem {
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-    text-align: left;
+    flex: 1;
+    padding: 20px;
 }
 
 .postsSection {
-    width: 70%;
     display: flex;
     flex-direction: column;
     gap: 20px;
     overflow-y: auto;
-    max-height: calc(100vh - 40px);
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .postItem {
@@ -114,4 +90,41 @@
     display: flex;
     align-items: center;
     gap: 5px;
+}
+
+.leaveCommunity{
+    background-color: red;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    border-radius: 30px;
+}
+
+.membersToggle{
+    cursor: pointer;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%; /* Full width on mobile */
+        transform: translateX(-100%); /* Hide by default */
+    }
+
+    .sidebarVisible {
+        transform: translateX(0); /* Show when toggled */
+    }
+
+    .communityContent {
+        margin-left: 0; /* No margin needed for mobile */
+    }
+
+    .sidebarToggle {
+        top: 10px;
+        left: 10px;
+    }
+
+    .postsSection {
+        width: 100%;
+    }
 }

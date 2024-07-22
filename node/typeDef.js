@@ -37,7 +37,8 @@ const typeDefs = gql`
     type posts{
         id: ID
         post_title: String,
-        post_media: String
+        post_media: String,
+        post_vtu: String,
         post_comments: [post_comments]
     }
 
@@ -66,6 +67,7 @@ const typeDefs = gql`
     }
 
     input PostInput {
+        post_vtu: String
         post_title: String
         post_media: String
     }

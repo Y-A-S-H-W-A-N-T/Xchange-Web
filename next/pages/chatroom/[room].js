@@ -7,10 +7,10 @@ import Image from 'next/image';
 import styles from '../../styles/room.module.css';
 import { useSelector } from 'react-redux';
 
-const socket = io('http://localhost:8000/');
+const socket = io('http://localhost:8000/')
 
 export default function Home() {
-  
+
   const router = useRouter();
   const { room } = router.query;
   const [media, setMedia] = useState('')
@@ -22,10 +22,9 @@ export default function Home() {
   useEffect(() => {
     socket.emit('connected', room);
     socket.on('pastMessages', past => {
-      setOldMessages(past);
-      console.log(past);
+      setOldMessages(past)
     });
-  },[room, router, message]);
+  });
 
   const SEND = () => {
     if(media==='' && message==='') return
@@ -33,7 +32,7 @@ export default function Home() {
       room_id: room,
       message: message,
       media: media,
-      sender_vtu: user,
+      sender_vtu: vtu,
     })
     setMessage('')
     setMedia('')
@@ -97,7 +96,7 @@ export default function Home() {
     <div className={styles.send_field}>
         <div className={styles.inputContainer}>
           <input type='file' onChange={e => handleImage(e.target.files[0])} id="fileInput"/>
-          <label htmlFor="fileInput">Send an image</label>
+          <label htmlFor="fileInput">📸</label>
           <input
             placeholder='Type here'
             onChange={e => setMessage(e.target.value)}

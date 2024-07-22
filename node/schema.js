@@ -84,6 +84,9 @@ const memberSchema = new Schema({
 })
 
 const postSchema = new Schema({
+    post_vtu: {
+        type: String
+    },
     post_title: {
         type: String
     },

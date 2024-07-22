@@ -13,6 +13,7 @@ export default function Community() {
     const [post_number, setPost_number] = useState('');
     const [showComments, setShowComments] = useState(false);
     const [showMembers, setShowMembers] = useState(false);
+    const [sidebarVisible, setSidebarVisible] = useState(false);
 
     const togglePostScreen = () => {
         setaddpost(!addpost);
@@ -20,6 +21,10 @@ export default function Community() {
 
     const toggleMembers = () => {
         setShowMembers(!showMembers);
+    };
+
+    const toggleSidebar = () => {
+        setSidebarVisible(!sidebarVisible);
     };
 
     const router = useRouter();
@@ -31,7 +36,11 @@ export default function Community() {
         dispatch(fetchCommunities());
     }, [dispatch]);
 
-    const selectedCommunity = useSelector(state => state.communities.communities[index]);
+    const selectedCommunity = useSelector(state => 
+        state.communities.communities && state.communities.communities[index]
+    )
+
+    console.log(selectedCommunity)
 
     const Leave_Community = async () => {
         alert("This will Remove you from Community");
@@ -52,58 +61,53 @@ export default function Community() {
 
     return (
         <div className={styles.communityPage}>
-            {selectedCommunity && <>
-                <div className={styles.sidebar}>
-                    <h1 className={styles.communityName}>{selectedCommunity !== null && selectedCommunity.name}</h1>
-                    <div className={styles.addPostSection}>
-                        <p className={styles.togglePost} onClick={togglePostScreen}>Add Post ➕</p>
-                        <AddPost togglePostScreen={togglePostScreen} addpost={addpost} community_id={community} />
-                    </div>
-                    <div className={styles.membersSection}>
-                        <h2 onClick={toggleMembers} className={styles.membersToggle}>MEMBERS {showMembers ? '▲' : '▼'}</h2>
-                        {showMembers && <div className={styles.membersList}>
-                            {
-                                selectedCommunity !== null
-                                    ?
-                                    (
-                                        selectedCommunity.members.map((members, ind) => (
-                                            <div key={ind} className={styles.memberItem}>
-                                                <p>{members.user_vtu}</p>
-                                            </div>
-                                        ))
-                                    )
-                                    :
-                                    (
-                                        <div></div>
-                                    )
-                            }
-                        </div>}
-                    </div>
-                    <div className={styles.leaveCommunity} onClick={Leave_Community}>Leave</div>
-                </div>
-                <div className={styles.communityContent}>
-                    <div className={styles.postsSection}>
-                        {
-                            selectedCommunity !== null
-                                ?
-                                (
-                                    selectedCommunity.posts.map((post, ind) => (
-                                        <div key={post._id} className={styles.postItem}>
-                                            <img src={post.post_media} alt='post' width={300} height={300} />
-                                            <p className={styles.commentIcon} onClick={() => Comment(post.id, ind)}>💬{post.post_comments.length}</p>
-                                            <p>{post.post_title}</p>
+            {!sidebarVisible && <button 
+                className={styles.sidebarToggle} 
+                onClick={toggleSidebar}
+            >
+                ➡️
+            </button>}
+            <AddPost togglePostScreen={togglePostScreen} addpost={addpost} community_id={community} />
+            <div className={`${styles.sidebar} ${sidebarVisible ? styles.sidebarVisible : styles.sidebarHidden}`}>
+                {selectedCommunity ? (
+                    <>
+                        <p className={styles.Closesidebar} onClick={toggleSidebar}>⬅️</p>
+                        <h1 className={styles.communityName}>{selectedCommunity.name}</h1>
+                        <div className={styles.addPostSection}>
+                            <p className={styles.togglePost} onClick={togglePostScreen}>Add Post ➕</p>
+                        </div>
+                        <div className={styles.membersSection}>
+                            <h2 onClick={toggleMembers} className={styles.membersToggle}>MEMBERS {showMembers ? '▲' : '▼'}</h2>
+                            {showMembers && <div className={styles.membersList}>
+                                {
+                                    selectedCommunity.members.map((members, ind) => (
+                                        <div key={ind} className={styles.memberItem}>
+                                            <p>{members.user_vtu}</p>
                                         </div>
                                     ))
-                                )
-                                :
-                                (
-                                    <div></div>
-                                )
-                        }
-                        {showComments && <Comment_Section post_id={post_id_for_comment} post_number={post_number} community_number={index} setShowComments={setShowComments} community_id={community} />}
-                    </div>
+                                }
+                            </div>}
+                        </div>
+                        <div className={styles.leaveCommunity} onClick={Leave_Community}>Leave</div>
+                    </>
+                ) : (
+                    <div>Loading community data...</div>
+                )}
+            </div>
+            <div className={styles.communityContent}>
+                <div className={styles.postsSection}>
+                    {
+                        selectedCommunity && selectedCommunity.posts.map((post, ind) => (
+                            <div key={post._id} className={styles.postItem}>
+                                <img src={post.post_media} alt='post' width={500} height={500} />
+                                <p className={styles.commentIcon} onClick={() => Comment(post.id, ind)}>💬{post.post_comments.length}</p>
+                                <p>{post.post_vtu} : {post.post_title}</p>
+                            </div>
+                        ))
+                    }
+                    {showComments && <Comment_Section post_id={post_id_for_comment} post_number={post_number} community_number={index} setShowComments={setShowComments} community_id={community} />}
                 </div>
-            </>}
+            </div>
         </div>
     );
 }

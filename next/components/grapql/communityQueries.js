@@ -15,6 +15,7 @@ const GET_COMMUNITIES = gql`
                 id
                 post_media
                 post_title
+                post_vtu
                 post_comments {
                     id
                     comment
@@ -70,6 +71,7 @@ const ADD_POST = gql`
                 id
                 post_media
                 post_title
+                post_vtu
                 post_comments {
                     comment
                     sender_vtu

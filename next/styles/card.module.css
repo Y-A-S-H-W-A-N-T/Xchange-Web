@@ -1,75 +1,79 @@
-
-  .card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid #ccc;
-    padding: 16px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: box-shadow 0.3s ease;
-    width: 30%; /* Adjust the width to fit three cards in a row */
-    margin: 25px;
-    margin-top: 15%;
-  }
-  
-  .card:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
-  
-  .card_content {
-    flex: 1;
-  }
-  
-  .card_title {
-    font-size: 24px;
-    font-weight: bold;
-    margin: 0 0 8px 0;
-  }
-  
-  .card_description {
-    font-size: 16px;
-    margin: 0;
-  }
-  
-  .card_image {
-    margin-left: 16px;
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  padding: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+  width: 30%;
+  margin: 25px;
+  box-shadow:  -10px -10px 0px 0px rgba(0, 0, 0, 0.1);
 }
-  
-  .card_image img {
-    height: 200px;
-    width: 200px;
-    border-radius: 8px;
-    object-fit: cover;
-  }
 
+.card:hover {
+  box-shadow:  10px 10px 0px 0px rgba(0, 0, 0, 0.1);
+}
+
+.card_content {
+  flex: 1;
+}
+
+.card_title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 8px 0;
+}
+
+.card_description {
+  font-size: 16px;
+  margin: 0;
+}
+
+.card_image {
+  margin-left: 16px;
+}
+
+.card_image img {
+  height: 200px;
+  width: 200px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.functionalities {
+  display: flex;
+  flex-wrap: wrap; /* Ensures cards wrap on smaller screens */
+  justify-content: center;
+  margin-left: 50px;
+}
+
+.exit {
+  display: flex;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
   .functionalities {
-    display: flex;
-    margin-left: 50px;
-  }
-
-  .exit{
-    display: flex;
-    float: right;
-    margin-top: -15px;
-    cursor: pointer;
-  }
-
-  @media (max-width: 768px) {
-    .side_by_side {
       flex-direction: column; /* Stack cards vertically */
       align-items: center; /* Center the cards */
-    }
-    
-    .card {
-      width: 100%; /* Full width on mobile */
+      margin-left: 0;
+  }
+
+  .card {
+      width: 90%; /* Full width on mobile */
       margin: 10px 0; /* Reduce margin for better spacing */
-    }
-    
-    .card_image img {
+  }
+
+  .card_image img {
       height: 150px;
       width: 150px;
-    }
   }
-  
+
+  .exit {
+      margin-top: 15px;
+      justify-content: center;
+  }
+}

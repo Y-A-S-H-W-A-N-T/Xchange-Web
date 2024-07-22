@@ -5,7 +5,6 @@ import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
 import styles from "../styles/post.module.css";
 import { addPostToCommunity, resetAddPostStatus } from "./slices/communitySlice";
 import { useDispatch, useSelector } from "react-redux";
-import Image from "next/image";
 
 export default function AddPost({ addpost, togglePostScreen, community_id }) {
 
@@ -22,7 +21,9 @@ export default function AddPost({ addpost, togglePostScreen, community_id }) {
             router.reload();
             dispatch(resetAddPostStatus());
         }
-    }, [addpoststatus]);
+    }, [addpoststatus])
+
+    const user = useSelector(state=> state.user.vtu.vtu)
 
     const Post = async () => {
         if (!title || !media) {
@@ -37,14 +38,15 @@ export default function AddPost({ addpost, togglePostScreen, community_id }) {
                 const newPost = {
                     community_id: community_id,
                     post_title: title,
-                    post_media: link
+                    post_media: link,
+                    post_vtu: user
                 }
+                console.log("posting - ",newPost)
                 dispatch(addPostToCommunity(newPost));
                 setLoading(false)
             }).catch(() => setLoading(false));
         }).catch(() => setLoading(false));
     }
-    console.log(media)
     return (
         <div>
             {addpost && (

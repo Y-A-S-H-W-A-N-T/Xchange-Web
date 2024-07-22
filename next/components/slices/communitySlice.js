@@ -42,7 +42,8 @@ export const addPostToCommunity = createAsyncThunk('community/addPostToCommunity
         communityID: Post.community_id,
         post: {
           post_title: Post.post_title,
-          post_media: Post.post_media
+          post_media: Post.post_media,
+          post_vtu: Post.post_vtu
         },
       },
     }

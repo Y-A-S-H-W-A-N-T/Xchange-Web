@@ -1,77 +1,126 @@
 .chatContainer {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    border-radius: 5px;
-    height: 80vh;
-  }
-  
-  .messagesContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 5px;
+  height: 80vh;
+  overflow-y: auto;
+}
+
+.messagesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.message_box {
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+}
+
+.message {
+  background-color: #6f7de6;
+  padding: 10px;
+  border-radius: 15px;
+  margin: 5px 0;
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
+.message p {
+  margin: 0;
+}
+
+.send_field {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  background-color: #fff;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  justify-content: space-between; /* Ensure buttons are on either side of the input field */
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-grow: 1;
+}
+
+.inputContainer input[type="file"] {
+  display: none;
+}
+
+.inputContainer label {
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.inputContainer input[type="text"] {
+  flex-grow: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.inputContainer button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
   .message {
-    background-color: #6f7de6;
-    padding: 10px;
-    border-radius: 15px;
-    margin: 20px;
-    border-top-left-radius: 0px;
+      max-width: 85%;
   }
-  
-  .message p {
-    margin: 0;
-  }
-  
+
   .send_field {
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    background-color: #fff;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    width: 60%;
+      width: 95%;
   }
-  
+
   .inputContainer {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
+      flex-grow: 1;
   }
-  
-  .inputContainer input[type="file"] {
-    opacity: 0;
-    position: absolute;
-    width: 0;
-    height: 0;
-  }
-  
-  .inputContainer label {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .inputContainer input[type="text"] {
-    flex-grow: 1;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    margin-right: 10px;
-  }
-  
+
+  .inputContainer label,
   .inputContainer button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
+      padding: 5px 10px;
+      font-size: 14px;
   }
-  
+}
+
+@media (max-width: 480px) {
+  .message {
+      font-size: 14px;
+  }
+
+  .send_field {
+      flex-direction: row; /* Ensure the buttons are on either side of the input field */
+  }
+
+  .inputContainer {
+      flex-grow: 1;
+  }
+
+  .inputContainer input[type="text"] {
+      margin: 0 10px;
+  }
+
+  .inputContainer label,
+  .inputContainer button {
+      padding: 5px 10px;
+      font-size: 14px;
+  }
+}

@@ -3,7 +3,6 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import Card from '../styles/card.module.css'
 import { useDispatch, useSelector } from 'react-redux';
-import Link from 'next/link';
 import { signout } from '@/components/slices/userSlice';
 
 export default function home() {
@@ -22,7 +21,7 @@ export default function home() {
   if(user===''){
     return (
       <div>
-        {user==='' && <Link href='/'>LOGIN FIRST</Link>}
+        {user==='' && <h2 onClick={()=>router.replace('/')}>LOGIN FIRST</h2>}
       </div>
     )
   }

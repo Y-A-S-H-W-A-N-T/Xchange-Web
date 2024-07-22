@@ -35,7 +35,6 @@ const resolvers = {
             }
         },
         addPostToCommunity: async(_,{ communityID, post }) => {
-            console.log(communityID,"-",post)
             const response = await Community.findByIdAndUpdate(
                 communityID,
                 { $push: { posts: post } },
