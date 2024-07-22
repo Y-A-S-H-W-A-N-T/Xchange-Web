@@ -41,7 +41,7 @@ export default function Coment_Section({ setShowComments, post_id, community_num
               {
                 Post.map((comment,ind)=>(
                   <div key={ind}>
-                      <p>{comment.comment}</p>
+                      <p>{comment.sender_vtu} : {comment.comment}</p>
                   </div>
                 ))
               }

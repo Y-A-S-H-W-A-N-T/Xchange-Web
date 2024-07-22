@@ -1,61 +1,112 @@
-/* Community.module.css */
+.communityPage {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #f0f0f0;
+    min-height: 100vh;
+}
 
-.container {
+.sidebar {
+    width: 20%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 20px;
+    gap: 20px;
 }
 
-.addButton {
+.communityContent {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Ensure the content doesn't overflow */
+}
+
+.leaveCommunity {
+    background-color: red;
+    color: white;
+    padding: 10px;
     cursor: pointer;
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-}
-
-.communityList {
+    border-radius: 5px;
+    text-align: center;
     width: 100%;
-    max-width: 800px;
 }
 
-.communityCard {
-    padding: 12px;
-    border: 0.5px rgba(0, 0, 0, 0.1) solid;
-    border-radius: 50px;
-    margin: 10px 0;
-    cursor: pointer;
-    transition: transform 0.3s;
-    box-shadow: 0 10px 0px rgba(0, 0, 0, 0.1);
+.addPostSection {
+    display: flex;
+    justify-content: flex-start;
     margin-bottom: 20px;
 }
 
-.communityCard:hover {
-    transform: scale(1.02);
+.togglePost {
+    cursor: pointer;
+    color: #0070f3;
+    font-size: 1.2em;
 }
 
 .communityName {
-    font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-align: left;
+    color: #333;
 }
 
-.communityDescription {
-    margin: 5px 0;
+.membersSection {
+    margin-bottom: 20px;
 }
 
-.memberStatus {
-    color: green;
-}
-
-.joinButton {
-    background-color: rgb(171, 56, 60);
+.membersToggle {
     cursor: pointer;
-    text-align: center;
-    width: fit-content;
+    color: #0070f3;
+    font-size: 1.2em;
+    text-align: left;
+}
+
+.membersList {
+    display: flex;
+    flex-direction: column;
     margin-top: 10px;
-    margin-left: auto;
-    border-radius: 100px;
-    padding: 7px;
-    font-family: cursive;
-    color: white;
-    box-shadow: 0 5px 0px rgba(0, 0, 0, 0.1);
+}
+
+.memberItem {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    text-align: left;
+}
+
+.postsSection {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: calc(100vh - 40px); /* Adjust the height to fit within the viewport */
+}
+
+.postItem {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.postItem img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.postItem p {
+    margin: 0;
+}
+
+.commentIcon {
+    cursor: pointer;
+    color: #0070f3;
+    font-size: 1.5em;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }

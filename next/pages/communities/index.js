@@ -2,7 +2,7 @@ import axios from "axios"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/router"
 import Community from "../../components/addcommunity"
-import styles from '../../styles/community.module.css'
+import styles from '../../styles/communities.module.css'
 import { useDispatch, useSelector } from "react-redux"
 import { fetchCommunities } from "@/components/slices/communitySlice"
 import { JOIN_COMMUNITY } from "@/components/grapql/communityQueries"
