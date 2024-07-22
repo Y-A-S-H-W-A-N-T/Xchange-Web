@@ -34,7 +34,7 @@ export default function Communities({ Oldcommunities }) {
         dispatch(fetchCommunities())
     },[dispatch])
 
-    const JoinCommunity = async(e,id)=>{
+    const JoinCommunity = async(e,id,ind)=>{
         e.stopPropagation();        
         joinCommunity({
             variables: {
@@ -45,7 +45,7 @@ export default function Communities({ Oldcommunities }) {
         .then((response)=>{
             console.log(response)
             if (response.data.joinCommunity.id!==null || '') {
-                router.push(`/communities/${id}`)
+                router.push(`/communities/${id}/${ind}`)
             }
             else {
                 alert("Error in Joining Community")
@@ -80,7 +80,7 @@ export default function Communities({ Oldcommunities }) {
                             : <p 
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    JoinCommunity(e, val.id);
+                                    JoinCommunity(e, val.id, ind);
                                 }} 
                                 className={styles.joinButton}
                               >

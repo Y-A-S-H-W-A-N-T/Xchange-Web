@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { storage } from "../config";
 import { useRouter } from "next/router";
 import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
@@ -38,18 +37,6 @@ export default function Addnews({ setCreate }) {
     const imgRef = ref(storage, `/news/${news.headline}-${Date.now()}`)
     uploadBytes(imgRef, image).then((res) => {
       getDownloadURL(res.ref).then(async (link) => {
-        // await axios
-        //   .post("/api/news/upload_news", {
-        //     headline: news.headline,
-        //     description: news.description,
-        //     image: link,
-        //   })
-        //   .then((res) => {
-        //     res.data.status === 200
-        //       ? alert("News Uploaded")
-        //       : alert("News was not uploaded due to some issue");
-        //     router.reload();
-        //   });
         const newNews = {
           headline: news.headline,
           description: news.description,
