@@ -48,7 +48,7 @@ export default function Community() {
     const vtu = useSelector(state=> state.user.vtu.vtu)
 
     const Leave_Community = async () => {
-        await axios.post('/api/community/leave_community', { community_id: community, user_vtu: vtu })
+        await axios.post('https://xchange-red.vercel.app/api/community/leave_community', { community_id: community, user_vtu: vtu })
             .then((res) => {
                 res.data.status === 200 ? 
                     router.replace('/communities')

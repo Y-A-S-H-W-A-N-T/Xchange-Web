@@ -21,7 +21,7 @@ export default function Coment_Section({ setShowComments, post_id, community_num
   console.log("Comment", comment)
 
   const Send_message = async()=>{
-    await axios.post('/api/community/comment',comment)
+    await axios.post('https://xchange-red.vercel.app/api/community/comment',comment)
     .then((res) => {
       res.data.status === 200
       ? dispatch(fetchCommunities())

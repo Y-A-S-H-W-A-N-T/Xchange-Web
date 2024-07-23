@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { signin } from '@/components/slices/userSlice'
 import { CustomAlert } from  'alerts-react'
 
-axios.post('http://localhost:3000/api/').then((res) => console.log(res.data.msg))
+axios.post('https://xchange-red.vercel.app/api/').then((res) => console.log(res.data.msg))
 
 export default function Home() {
 
@@ -36,7 +36,7 @@ export default function Home() {
       })
       return setLoading(false)
     }
-    await axios.post('http://localhost:3000/api/login', student)
+    await axios.post('https://xchange-red.vercel.app/api/login', student)
       .then((res) => {
         if (res.data.status === 400)
         {  
