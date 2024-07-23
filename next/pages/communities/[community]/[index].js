@@ -6,6 +6,9 @@ import Comment_Section from '@/components/comment_section';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCommunities } from '@/components/slices/communitySlice';
 import styles from '@/styles/community.module.css';
+import Loading from '@/components/loading';
+import { CustomAlert } from  'alerts-react'
+import { types } from 'util';
 
 export default function Community() {
     const [addpost, setaddpost] = useState(false);
@@ -42,14 +45,19 @@ export default function Community() {
 
     console.log(selectedCommunity)
 
+    const vtu = useSelector(state=> state.user.vtu.vtu)
+
     const Leave_Community = async () => {
-        alert("This will Remove you from Community");
-        let vtu = localStorage.getItem('vtu');
-        const VTU = vtu.replace(/^"(.*)"$/, '$1');
-        await axios.post('/api/community/leave_community', { community_id: community, user_vtu: VTU })
+        await axios.post('/api/community/leave_community', { community_id: community, user_vtu: vtu })
             .then((res) => {
-                res.data.status === 200 ? alert('Left the Community') : alert("Error in leaving Community");
-                router.replace('/communities');
+                res.data.status === 200 ? 
+                    router.replace('/communities')
+                :
+                CustomAlert({
+                    title: 'Try Again after some time',
+                    showCancelButton: false,
+                    type: 'information'
+                })
             });
     };
 
@@ -70,13 +78,14 @@ export default function Community() {
     }
 
     return (
-        <>
+        <>  
+            {!selectedCommunity && <Loading/>}
             {user && <div className={styles.communityPage}>
             {!sidebarVisible && <button 
                 className={styles.sidebarToggle} 
                 onClick={toggleSidebar}
             >
-                ➡️
+            ☰
             </button>}
             <AddPost togglePostScreen={togglePostScreen} addpost={addpost} community_id={community} />
             <div className={`${styles.sidebar} ${sidebarVisible ? styles.sidebarVisible : styles.sidebarHidden}`}>

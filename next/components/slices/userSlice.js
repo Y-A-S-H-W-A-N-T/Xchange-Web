@@ -14,9 +14,6 @@ const userSlice = createSlice({
     },
     signout: (state) => {
       state.vtu = ''
-    },
-    auth: (state,action) =>{
-      state.pass = action.payload
     }
   },
 });

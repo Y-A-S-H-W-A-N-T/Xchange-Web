@@ -25,7 +25,7 @@ export default function Coment_Section({ setShowComments, post_id, community_num
     .then((res) => {
       res.data.status === 200
       ? dispatch(fetchCommunities())
-      : alert(res.data.response)
+      : ''
       setComment((prev)=>({...prev,comment_payload: ''}))
     });
   }

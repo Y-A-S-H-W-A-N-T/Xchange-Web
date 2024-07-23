@@ -2,8 +2,9 @@ import Image from 'next/image';
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import Card from '../styles/card.module.css'
-import { useDispatch, useSelector } from 'react-redux';
-import { signout } from '@/components/slices/userSlice';
+import { useDispatch, useSelector } from 'react-redux'
+import { signout } from '@/components/slices/userSlice'
+import Loading from '@/components/loading';
 
 export default function home() {
 
@@ -26,10 +27,11 @@ export default function home() {
     )
   }
 
-  console.log(user)
-
+  console.log(process.env)
+  
   return (
     <div>
+        {!user && <Loading/>}
         {user && <div>
           <div className={Card.exit}>
             <div onClick={Logout}><img alt='logout' src='./exit.png' height={80} width={80}/></div>

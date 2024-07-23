@@ -5,6 +5,7 @@ import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
 import styles from "../styles/modal.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addNews, fetchNews, resetAddStatus } from "./slices/newsSlice";
+import { CustomAlert } from  'alerts-react'
 
 export default function Addnews({ setCreate }) {
   const router = useRouter();
@@ -23,7 +24,6 @@ export default function Addnews({ setCreate }) {
       console.log("Data Refetched")
       setCreate(false)
       dispatch(resetAddStatus())
-      alert('News added successfully!')
     }
   }, [addstatus, dispatch]);
 
@@ -31,7 +31,10 @@ export default function Addnews({ setCreate }) {
 
   const Create = async () => {
     if (news.headline === "" || news.description === "" || !image) {
-      return alert("Fill the necessary details to publish news");
+      return CustomAlert({
+        description: 'Fill the necessary details to publish news',
+        showCancelButton: false
+      })
     }
 
     const imgRef = ref(storage, `/news/${news.headline}-${Date.now()}`)

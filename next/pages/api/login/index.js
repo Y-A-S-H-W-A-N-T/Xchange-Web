@@ -1,4 +1,3 @@
-import connect from '../../../mongo'
 import User from '../../../Schema/UserSchema.js'
 
 

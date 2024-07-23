@@ -4,8 +4,11 @@ import mongoose from 'mongoose'
 import { ApolloServer } from 'apollo-server-express'
 import typeDefs from './typeDef.js'
 import resolvers from './resolver.js'
+import dotenv from 'dotenv'
 
-const MONGO_URL = 'mongodb+srv://yashwant:yashwant@cluster0.n8lyem8.mongodb.net/Xchange?retryWrites=true&w=majority&appName=Cluster0'
+dotenv.config()
+
+const MONGO_URL = process.env.MONGOOSE_URL
 
 mongoose.connect(MONGO_URL).then(()=>console.log("DATABASE CONNECTED"))
 

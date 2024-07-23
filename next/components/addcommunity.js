@@ -3,6 +3,7 @@ import { useRouter } from "next/router"
 import styles from "../styles/modal.module.css"
 import { useDispatch, useSelector } from "react-redux"
 import { addCommunity, fetchCommunities, resetAddStatus } from "./slices/communitySlice"
+import { CustomAlert } from  'alerts-react'
 
 export default function AddCommunity({ setCreate }) {
 
@@ -20,10 +21,19 @@ export default function AddCommunity({ setCreate }) {
       dispatch(fetchCommunities())
       setCreate(false)
       dispatch(resetAddStatus())
-      alert("Community Created")  
+      CustomAlert({
+        title: 'Community Created',
+        showCancelButton: false,
+        type: 'success'
+        })  
     }
     else if(addstatus==='failed'){
-      alert("Error in Creating Community")
+      CustomAlert({
+        title: 'Error in creating Community',
+        description: 'Try again after some time',
+        type: 'error',
+        showCancelButton: false
+        })
     }
   },[addstatus,dispatch])
 
@@ -31,7 +41,11 @@ export default function AddCommunity({ setCreate }) {
   console.log(user)
 
   const Create = async () => {
-    if (community.name === "") return alert("Enter a name for community")
+    if (community.name === "")
+      return CustomAlert({
+        title: 'Enter Community name',
+        showCancelButton: false
+      })
     const newCommunity = {
       name: community.name,
       description: community.description,

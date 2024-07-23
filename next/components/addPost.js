@@ -5,6 +5,7 @@ import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
 import styles from "../styles/post.module.css";
 import { addPostToCommunity, resetAddPostStatus } from "./slices/communitySlice";
 import { useDispatch, useSelector } from "react-redux";
+import { CustomAlert } from  'alerts-react'
 
 export default function AddPost({ addpost, togglePostScreen, community_id }) {
 
@@ -27,8 +28,9 @@ export default function AddPost({ addpost, togglePostScreen, community_id }) {
 
     const Post = async () => {
         if (!title || !media) {
-            alert("Please provide both title and media");
-            return;
+            return CustomAlert({
+                description: 'Title and Media field is required'
+            })
         }
 
         setLoading(true);

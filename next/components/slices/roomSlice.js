@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios'
 import client from '../grapql/apolloserver'
 import { ADD_ROOM, GET_ROOMS } from '../grapql/roomQueries';
 

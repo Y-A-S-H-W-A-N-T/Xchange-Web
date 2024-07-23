@@ -1,34 +1,23 @@
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
-import axios from 'axios'
-import Image from 'next/image'
 import Chatroom from '@/components/chatroom'
 import styles from '../../styles/locker.module.css'
 import Passcode from '@/components/passcode'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchRooms } from '@/components/slices/roomSlice'
-import { auth } from '@/components/slices/userSlice'
+import Loading from '@/components/loading'
+import { CustomAlert } from  'alerts-react'
 
-// export async function getStaticProps() {
-//   const response = await fetch('http://localhost:3000/api/room')
-//   const lockers = await response.json()
-//   return { props: { lockers } }
-// }
-
-export default function navbar({ lockers }) {
+export default function navbar() {
 
   const dispatch = useDispatch()
-  const { rooms, status, error } = useSelector(state=> state.rooms) // manage errors, add loading screen
+  const { rooms, status, error } = useSelector(state=> state.rooms)
   const router = useRouter()
 
   useEffect(()=>{
     dispatch(fetchRooms())
   },[dispatch])
 
-  console.log(rooms)
-
-  const user = useSelector(state=> state.user)
-  console.log(user)
 
   const [create,setCreate] = useState(false)
   const [privateRoom,setPrivateRoom] = useState({
@@ -39,7 +28,7 @@ export default function navbar({ lockers }) {
   })
 
   const openChats = async(id,ind,pass)=>{
-        setPrivateRoom((prev)=>({...prev,passcode: pass, id: id})) // setting id for private room
+        setPrivateRoom((prev)=>({...prev,passcode: pass, id: id}))
         rooms[ind].private === true ? setPrivateRoom((prev)=>({...prev,pass: true})) : router.push(`/chatroom/${id}`)
   }
 
@@ -47,17 +36,18 @@ export default function navbar({ lockers }) {
      if (privateRoom.input===privateRoom.passcode)
      {
       router.push(`/chatroom/${privateRoom.id}`)
-      dispatch(auth(privateRoom.passcode))
      }
     else{
-      alert("Incorrect Passcode")
+      CustomAlert({
+        title: 'Wrong Pass Code',
+        showCancelButton: false,
+        type: 'error'
+      })
       setPrivateRoom((prev)=>({...prev,pass: false}))
     }
   }
 
   const vtu = useSelector(state=> state.user.vtu)
-
-    console.log(vtu)
 
     if(vtu===''){
         return (
@@ -69,6 +59,7 @@ export default function navbar({ lockers }) {
   
   return (
   <>
+    {status==='loading' && <Loading/>}
     {vtu && <div className={styles.container}>
     <div className={styles.createButton} onClick={() => setCreate(true)}><img src='./add.png' alt='create_room' height={50} width={50}/></div>
             <div>

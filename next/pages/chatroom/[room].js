@@ -6,6 +6,7 @@ import { uploadBytes, ref, getDownloadURL } from 'firebase/storage';
 import Image from 'next/image';
 import styles from '../../styles/room.module.css';
 import { useSelector } from 'react-redux';
+import Loading from '@/components/loading';
 
 const socket = io('http://localhost:8000/')
 
@@ -23,7 +24,7 @@ export default function Home() {
     socket.emit('connected', room);
     socket.on('pastMessages', past => {
       setOldMessages(past)
-    });
+    })
   });
 
   const SEND = () => {
@@ -59,6 +60,7 @@ export default function Home() {
 
   return (
     <>
+      {!oldMessages && <Loading/>}
       {user && <>
       <div className={styles.chatContainer}>
       <div style={{paddingBottom: '60px'}}>

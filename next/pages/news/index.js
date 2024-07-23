@@ -5,13 +5,8 @@ import News from '../../components/addnews'
 import styles from '../../styles/news.module.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchNews } from '@/components/slices/newsSlice'
+import Loading from '@/components/loading'
 
-
-// export async function getStaticProps() {
-//   const response = await fetch('http://localhost:3000/api/news/show_news')
-//   const NEWS = await response.json()
-//   return { props: { NEWS } }
-// }
 
 export default function navbar({ NEWS }) {
   const router = useRouter()
@@ -34,6 +29,7 @@ export default function navbar({ NEWS }) {
   
   return (
     <>
+      {!news && <Loading/>}
       {user && <>
       <div className={styles.createButton} onClick={() => setCreate(true)}><img src='./add.png' alt='create_room' height={50} width={50}/></div>
       <div className={styles.container}> 

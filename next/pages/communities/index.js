@@ -7,14 +7,11 @@ import { useDispatch, useSelector } from "react-redux"
 import { fetchCommunities } from "@/components/slices/communitySlice"
 import { JOIN_COMMUNITY } from "@/components/grapql/communityQueries"
 import { useMutation } from "@apollo/client"
+import Loading from "@/components/loading"
+import { CustomAlert } from 'alerts-react'
 
-// export async function getStaticProps() {
-//     const response = await fetch('http://localhost:3000/api/community/show_community')
-//     const communities = await response.json()
-//     return { props: { Oldcommunities } }
-//   }
 
-export default function Communities({ Oldcommunities }) {
+export default function Communities() {
 
     const router = useRouter()
     const [create,setCreate] = useState(false)
@@ -48,7 +45,12 @@ export default function Communities({ Oldcommunities }) {
                 router.push(`/communities/${id}/${ind}`)
             }
             else {
-                alert("Error in Joining Community")
+                CustomAlert({
+                    title: 'Error in joining Community',
+                    description: 'Try again after some time',
+                    showCancelButton: false,
+                    type: 'error'
+                })
             }
         })
     }
@@ -67,8 +69,9 @@ export default function Communities({ Oldcommunities }) {
 
   return (
     <div className={styles.container}>
+            {!communities && <Loading/>}
             {vtu && <>
-            <div onClick={() => setCreate(true)} className={styles.addButton}>➕</div>
+            <div onClick={() => setCreate(true)} className={styles.addButton}>🆕</div>
             <div>
                 {create && <Community setCreate={setCreate} />}
             </div>
@@ -80,7 +83,11 @@ export default function Communities({ Oldcommunities }) {
                         onClick={() => {
                             val.members.some(member => member.user_vtu === user)
                                 ? router.push(`/communities/${val.id}/${ind}`)
-                                : alert("First Join the Community")
+                                :
+                                CustomAlert({
+                                    title: 'Join Community to enter',
+                                    showCancelButton: false
+                                })
                         }}
                     >
                         <p className={styles.communityName}>{val.name}</p>
@@ -97,7 +104,7 @@ export default function Communities({ Oldcommunities }) {
                                 }} 
                                 className={styles.joinButton}
                               >
-                                Join Community ➕
+                                {loading?'joining...':'Join Community ➕'}
                               </p>
                         }
                     </div>

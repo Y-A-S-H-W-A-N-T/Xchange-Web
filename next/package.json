@@ -12,6 +12,7 @@
     "@apollo/client": "^3.10.8",
     "@reduxjs/toolkit": "^2.2.6",
     "@types/socket.io": "^3.0.2",
+    "alerts-react": "^1.0.2",
     "axios": "^1.6.8",
     "firebase": "^10.11.1",
     "fs": "^0.0.1-security",

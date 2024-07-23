@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "../styles/modal.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addRoom, fetchRooms, resetAddStatus } from "./slices/roomSlice";
+import { CustomAlert } from  'alerts-react'
 
 export default function Chatroom({ setCreate }) {
 
@@ -20,7 +21,6 @@ export default function Chatroom({ setCreate }) {
       dispatch(fetchRooms())
       setCreate(false)
       dispatch(resetAddStatus())
-      alert("Locker room created")
     }
   },[addstatus,dispatch])
 
@@ -28,10 +28,16 @@ export default function Chatroom({ setCreate }) {
 
   const Create = async () => {
     if (chatroom.private && chatroom.passcode === "") {
-      return alert("Enter Pass Code");
+      return CustomAlert({
+        description: 'Enter Pass Code',
+        showCancelButton: false
+      })
     }
     if (chatroom.name === "") {
-      return alert("Enter name before creating the room");
+      return CustomAlert({
+        description: 'Enter locker room name',
+        showCancelButton: false
+        })
     }
     dispatch(addRoom(chatroom))
   };
