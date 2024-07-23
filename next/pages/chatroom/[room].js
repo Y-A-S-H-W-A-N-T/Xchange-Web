@@ -8,7 +8,7 @@ import styles from '../../styles/room.module.css';
 import { useSelector } from 'react-redux';
 import Loading from '@/components/loading';
 
-const socket = io('http://localhost:8000/')
+const socket = io('https://xchange-hjil.onrender.com/')
 
 export default function Home() {
 

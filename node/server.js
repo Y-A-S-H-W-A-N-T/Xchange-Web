@@ -31,7 +31,7 @@ app.use(bodyParser.json())
 
   const io = new Server(server, {
     cors: {
-      origin: "http://localhost:3000",
+      origin: "https://xchange-red.vercel.app",
       methods: ["GET", "POST"]
     }
   });
@@ -60,7 +60,7 @@ io.on('connection', (socket) => {
 
 
 const startApolloServer = async()=>{
-  const apolloserver = new ApolloServer({typeDefs, resolvers})
+  const apolloserver = new ApolloServer({typeDefs, resolvers, persistedQueries: false})
   
   await apolloserver.start()
   
