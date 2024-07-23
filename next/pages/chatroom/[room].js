@@ -47,9 +47,20 @@ export default function Home() {
     });
   }
 
+  const user = useSelector(state=> state.user.vtu)
+
+    if(user===''){
+        return (
+        <div>
+            {user==='' && <h2 onClick={()=>router.replace('/')}>LOGIN FIRST</h2>}
+        </div>
+        )
+    }
+
   return (
     <>
-    <div className={styles.chatContainer}>
+      {user && <>
+      <div className={styles.chatContainer}>
       <div style={{paddingBottom: '60px'}}>
         {oldMessages.map((val, ind) =>{
           if(vtu===val.sender_vtu)
@@ -109,6 +120,7 @@ export default function Home() {
           {media && <Image src={media} width={50} height={50} />}
         </div>
       </div>
-  </>
+      </>}
+    </>
   );
 }

@@ -53,8 +53,21 @@ export default function Communities({ Oldcommunities }) {
         })
     }
 
+    const vtu = useSelector(state=> state.user.vtu)
+
+    console.log(vtu)
+
+    if(vtu===''){
+        return (
+        <div>
+            {vtu==='' && <h2 onClick={()=>router.replace('/')}>LOGIN FIRST</h2>}
+        </div>
+        )
+    }
+
   return (
     <div className={styles.container}>
+            {vtu && <>
             <div onClick={() => setCreate(true)} className={styles.addButton}>➕</div>
             <div>
                 {create && <Community setCreate={setCreate} />}
@@ -90,6 +103,7 @@ export default function Communities({ Oldcommunities }) {
                     </div>
                 ))}
             </div>
-        </div>
+            </>}
+    </div>
   )
 }

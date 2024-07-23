@@ -23,10 +23,18 @@ export default function navbar({ NEWS }) {
     dispatch(fetchNews())
   },[dispatch])
 
-  const user = useSelector(state=> state.user)
+  const user = useSelector(state=> state.user.vtu)
+    if(user===''){
+        return (
+        <div>
+            {user==='' && <h2 onClick={()=>router.replace('/')}>LOGIN FIRST</h2>}
+        </div>
+        )
+    }
   
   return (
     <>
+      {user && <>
       <div className={styles.createButton} onClick={() => setCreate(true)}><img src='./add.png' alt='create_room' height={50} width={50}/></div>
       <div className={styles.container}> 
           <div>
@@ -44,6 +52,7 @@ export default function navbar({ NEWS }) {
               ))}
           </div>
       </div>
+      </>}
     </>
   )
 }

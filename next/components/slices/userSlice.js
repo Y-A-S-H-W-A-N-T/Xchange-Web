@@ -14,9 +14,12 @@ const userSlice = createSlice({
     },
     signout: (state) => {
       state.vtu = ''
+    },
+    auth: (state,action) =>{
+      state.pass = action.payload
     }
   },
 });
 
-export const { signin, signout } = userSlice.actions;
+export const { signin, signout, auth } = userSlice.actions;
 export default userSlice.reducer;

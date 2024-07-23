@@ -7,6 +7,7 @@ import styles from '../../styles/locker.module.css'
 import Passcode from '@/components/passcode'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchRooms } from '@/components/slices/roomSlice'
+import { auth } from '@/components/slices/userSlice'
 
 // export async function getStaticProps() {
 //   const response = await fetch('http://localhost:3000/api/room')
@@ -43,22 +44,33 @@ export default function navbar({ lockers }) {
   }
 
   const enterChat = async()=>{
-    privateRoom.input===privateRoom.passcode ? (
-      router.push(`/chatroom/${privateRoom.id}`) // id for private room
-    )
-    :
-    alert("Incorrect Passcode")
-    // await axios
-    // .post('/api/room/enter_room',{ room_id: privateRoom.room_id, pass: privateRoom.passcode })// Do not fetch for the passcode, store the passcode before itself for auth
-    // .then((res)=>{
-    //     res.data.status === 200 ? router.push(`/chatroom/${privateRoom.room_id}`) : alert('Wrong pass')
-    // })
-    setPrivateRoom((prev)=>({...prev,pass: false}))
+     if (privateRoom.input===privateRoom.passcode)
+     {
+      router.push(`/chatroom/${privateRoom.id}`)
+      dispatch(auth(privateRoom.passcode))
+     }
+    else{
+      alert("Incorrect Passcode")
+      setPrivateRoom((prev)=>({...prev,pass: false}))
+    }
   }
+
+  const vtu = useSelector(state=> state.user.vtu)
+
+    console.log(vtu)
+
+    if(vtu===''){
+        return (
+        <div>
+            {vtu==='' && <h2 onClick={()=>router.replace('/')}>LOGIN FIRST</h2>}
+        </div>
+        )
+    }
   
   return (
-<div className={styles.container}>
-            <div className={styles.createButton} onClick={() => setCreate(true)}><img src='./add.png' alt='create_room' height={50} width={50}/></div>
+  <>
+    {vtu && <div className={styles.container}>
+    <div className={styles.createButton} onClick={() => setCreate(true)}><img src='./add.png' alt='create_room' height={50} width={50}/></div>
             <div>
                 {create && <Chatroom setCreate={setCreate} />}
             </div>
@@ -78,7 +90,8 @@ export default function navbar({ lockers }) {
                     </div>
                 ))}
             </div>
-            {privateRoom.pass && <Passcode setPrivateRoom={setPrivateRoom} enterChat={enterChat}/>}
-        </div>
+            {privateRoom.pass && <Passcode setPrivateRoom={setPrivateRoom} enterChat={enterChat}/>}          
+  </div>}
+  </>
   )
 }

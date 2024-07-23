@@ -57,10 +57,21 @@ export default function Community() {
         setPost_number(ind);
         setPost_id_for_comment(id);
         setShowComments(true);
-    };
+    }
+
+    const user = useSelector(state=> state.user.vtu)
+
+    if(user===''){
+        return (
+        <div>
+            {user==='' && <h2 onClick={()=>router.replace('/')}>LOGIN FIRST</h2>}
+        </div>
+        )
+    }
 
     return (
-        <div className={styles.communityPage}>
+        <>
+            {user && <div className={styles.communityPage}>
             {!sidebarVisible && <button 
                 className={styles.sidebarToggle} 
                 onClick={toggleSidebar}
@@ -108,6 +119,7 @@ export default function Community() {
                     {showComments && <Comment_Section post_id={post_id_for_comment} post_number={post_number} community_number={index} setShowComments={setShowComments} community_id={community} />}
                 </div>
             </div>
-        </div>
-    );
+        </div>}
+        </>
+    )
 }
